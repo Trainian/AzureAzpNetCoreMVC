@@ -1,0 +1,36 @@
+﻿@model EmployeeViews
+
+@{
+    Layout = "_Layout";
+}
+
+<div class="container">
+    <div class="row">
+        <form class="col-md-offset-3 col-md-6" asp-action="EmployeeView">
+            <div asp-validation-summary="ModelOnly" class="alert-danger text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Id" for="empl_id"></label>
+                <input type="text" value="@Model.Id" id="empl_id" class="form-control" asp-for="Id" readonly/>
+                <span asp-validation-for="Id" class="alert-danger text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FirstName"for="empl_fn"></label>
+                <input type="text" value="@Model.FirstName" id="empl_fn" class="form-control" asp-for="FirstName"/>
+                <span asp-validation-for="FirstName" class="alert-danger text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastName" for="empl_ln"></label>
+                <input type="text" value="@Model.LastName" id="empl_ln" class="form-control" asp-for="LastName"/>
+                <span asp-validation-for="LastName" class="alert-danger text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Age" for="empl_age"></label>
+                <input type="number" value="@Model.Age" id="empl_age" class="form-control" asp-for="Age"/>
+                <span asp-validation-for="Age" class="alert-danger text-danger"></span>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-default">Save</button>
+            </div>
+        </form>
+    </div>
+</div>

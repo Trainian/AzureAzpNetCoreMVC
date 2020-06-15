@@ -1,0 +1,11 @@
+﻿
+@{
+    ViewBag.Title = "Продукция Подробно";
+    Layout = "_LayoutDoubleSections";
+}
+
+@await Html.PartialAsync("_ProductDetails")
+
+@await Html.PartialAsync("_CategoryTab")
+
+@await Html.PartialAsync("_RecommendedItems")

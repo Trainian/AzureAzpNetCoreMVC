@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AzureAspNetCore.Infrastructure.Implementations;
+using AzureAspNetCore.Infrastructure.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -17,6 +19,8 @@ namespace AzureAspNetCore
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            services.AddSingleton<IEmployeesData, InMemoryEmployeesData>();
+            services.AddSingleton<IProductData, InMemoryProductData>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -30,7 +34,12 @@ namespace AzureAspNetCore
             app.UseStaticFiles();
             app.UseRouting();
 
-            app.UseEndpoints(endpoints => { endpoints.MapControllerRoute("Default","{controller=Home}/{action=Index}/{id?}"); });
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                    "Default",
+                    "{controller=Employee}/{action=Index}/{id?}");
+            });
         }
     }
 }
