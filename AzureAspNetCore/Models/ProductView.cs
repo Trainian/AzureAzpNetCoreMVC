@@ -6,8 +6,9 @@ using AzureAspNetCore.Domain.Entities.Base;
 
 namespace AzureAspNetCore.Models
 {
-    public class BrandView : OrderedEntity
+    public class ProductView : OrderedEntity
     {
-        public int ProductsCount { get; set; }
+        public string ImageUrl { get; set; }
+        public decimal Price { get; set; }
     }
 }
