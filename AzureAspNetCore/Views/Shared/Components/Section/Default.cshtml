@@ -1,2 +1,40 @@
 ﻿
 @model IEnumerable<SectionView>
+
+<div class="panel-group category-products" id="accordian">
+    <!--category-productsr-->
+
+    @foreach (var mod in Model)
+    {
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    @if (mod.ChildSection.Count != 0)
+                    {
+                        <a data-toggle="collapse" data-parent="#accordian" href="#@mod.Name">
+                            <span class="badge pull-right"><i class="fa fa-plus"></i></span>
+                            @mod.Name
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="#">@mod.Name</a>
+                    }
+                </h4>
+            </div>
+            @if (mod.ChildSection.Count != 0)
+            {
+                <div id="@mod.Name" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <ul>
+                            @foreach (var el in mod.ChildSection)
+                            {
+                                <li><a href="#">@el.Name</a></li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

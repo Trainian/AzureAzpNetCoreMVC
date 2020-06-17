@@ -1,8 +1,8 @@
 ﻿<h2>Category</h2>
 
-@await Html.PartialAsync("LeftSideBar/_Accordion")
+@await Component.InvokeAsync("Section")
 
-@await Html.PartialAsync("LeftSideBar/_BrandsProducts")
+@await Component.InvokeAsync("Brand")
 
 @await Html.PartialAsync("LeftSideBar/_PriceRange")
 
