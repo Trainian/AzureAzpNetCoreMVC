@@ -29,7 +29,7 @@
                         <ul>
                             @foreach (var el in mod.ChildSection)
                             {
-                                <li><a href="#">@el.Name</a></li>
+                                <li><a asp-controller="Shop" asp-action="Products" asp-route-sectionId="@el.Id">@el.Name</a></li>
                             }
                         </ul>
                     </div>
