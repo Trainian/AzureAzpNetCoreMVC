@@ -33,7 +33,8 @@ namespace AzureAspNetCore.ViewComponents
                 {
                     Id = brand.Id,
                     Name = brand.Name,
-                    Order = brand.Order
+                    Order = brand.Order,
+                    ProductsCount = _productData.GetBrandProductsCount(brand.Id)
                 });
             }
 

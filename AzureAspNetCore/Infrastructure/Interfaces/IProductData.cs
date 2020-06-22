@@ -14,5 +14,7 @@ namespace AzureAspNetCore.Infrastructure.Interfaces
         IEnumerable<Section> GetSections();
 
         IEnumerable<Product> GetProducts(ProductFilter filter);
+
+        int GetBrandProductsCount(int brandId);
     }
 }

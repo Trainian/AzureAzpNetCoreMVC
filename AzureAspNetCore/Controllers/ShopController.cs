@@ -31,9 +31,9 @@ namespace AzureAspNetCore.Controllers
                     Order = p.Order,
                     ImageUrl = p.ImageUrl,
                     Price = p.Price
-                })
+                }).OrderBy(p => p.Order).ToList()
             };
-            return View(model);
+            return View(model); 
         }
 
         public IActionResult Product_Details()

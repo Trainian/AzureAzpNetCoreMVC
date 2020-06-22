@@ -402,6 +402,7 @@ namespace AzureAspNetCore.Infrastructure.Implementations
 
         public IEnumerable<Brand> GetBrands()
         {
+
             return _brands;
         }
 
@@ -409,10 +410,15 @@ namespace AzureAspNetCore.Infrastructure.Implementations
         {
             var products = _products;
             if (filter.SectionId.HasValue)
-                products = _products.Where(p => p.Equals(filter.SectionId)).ToList();
+                products = _products.Where(p => p.SectionId.Equals(filter.SectionId)).ToList();
             if (filter.BrandId.HasValue)
-                products = _products.Where(p => p.Equals(filter.BrandId)).ToList();
+                products = _products.Where(p => p.BrandId.Equals(filter.BrandId)).ToList();
             return products;
+        }
+
+        public int GetBrandProductsCount(int brandId)
+        {
+            return _products.Count(p => p.BrandId == brandId);
         }
 
         public IEnumerable<Section> GetSections()
