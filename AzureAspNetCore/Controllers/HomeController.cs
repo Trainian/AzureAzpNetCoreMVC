@@ -14,7 +14,7 @@ namespace AzureAspNetCore.Controllers
         }
 
         [Route("Not_Found_404")]
-        public IActionResult NotFound()
+        public IActionResult NotFounded()
         {
             return View();
         }

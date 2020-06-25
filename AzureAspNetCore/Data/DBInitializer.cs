@@ -2,66 +2,25 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AzureAspNetCore.DAL.Context;
 using AzureAspNetCore.Domain.Entities;
-using AzureAspNetCore.Infrastructure.Interfaces;
 using AzureAspNetCore.Models;
+using Microsoft.EntityFrameworkCore;
 
-namespace AzureAspNetCore.Infrastructure.Implementations
+namespace AzureAspNetCore.Data
 {
-    public class InMemoryProductData : IProductData
+    public class DBInitializer
     {
-        private readonly List<Brand> _brands;
-        private readonly List<Section> _sections;
-        private readonly List<Product> _products;
-
-        public InMemoryProductData()
+        public static void Initialize(AzureAspNetCoreContext context)
         {
-            _brands = new List<Brand>()
+            context.Database.EnsureCreated();
+
+            if (context.Products.Any())
             {
-                new Brand()
-                {
-                    Id = 1,
-                    Name = "ACME",
-                    Order = 0
-                },
-                new Brand()
-                {
-                    Id = 2,
-                    Name = "Grüne Erde",
-                    Order = 1
-                },
-                new Brand()
-                {
-                    Id = 3,
-                    Name = "Albiro",
-                    Order = 2
-                },
-                new Brand()
-                {
-                    Id = 4,
-                    Name = "Ronhill",
-                    Order = 3
-                },
-                new Brand()
-                {
-                    Id = 5,
-                    Name = "Oddmolly",
-                    Order = 4
-                },
-                new Brand()
-                {
-                    Id = 6,
-                    Name = "Boudestijn",
-                    Order = 5
-                },
-                new Brand()
-                {
-                    Id = 7,
-                    Name = "Rösch creative culture",
-                    Order = 6
-                }
-            };
-            _sections = new List<Section>()
+                return;
+            }
+
+            var sections = new List<Section>()
             {
                 new Section()
                 {
@@ -274,7 +233,78 @@ namespace AzureAspNetCore.Infrastructure.Implementations
                     Order = 9
                 }
             };
-            _products = new List<Product>()
+            using (var trans = context.Database.BeginTransaction())
+            {
+                foreach (var section in sections)
+                {
+                    context.Sections.Add(section);
+                }
+
+                context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT [dbo].[Sections] ON");
+                context.SaveChanges();
+                context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT [dbo].[Sections] OFF");
+                trans.Commit();
+            }
+
+            var brands = new List<Brand>()
+            {
+                new Brand()
+                {
+                    Id = 1,
+                    Name = "ACME",
+                    Order = 0
+                },
+                new Brand()
+                {
+                    Id = 2,
+                    Name = "Grüne Erde",
+                    Order = 1
+                },
+                new Brand()
+                {
+                    Id = 3,
+                    Name = "Albiro",
+                    Order = 2
+                },
+                new Brand()
+                {
+                    Id = 4,
+                    Name = "Ronhill",
+                    Order = 3
+                },
+                new Brand()
+                {
+                    Id = 5,
+                    Name = "Oddmolly",
+                    Order = 4
+                },
+                new Brand()
+                {
+                    Id = 6,
+                    Name = "Boudestijn",
+                    Order = 5
+                },
+                new Brand()
+                {
+                    Id = 7,
+                    Name = "Rösch creative culture",
+                    Order = 6
+                }
+            };
+            using (var trans = context.Database.BeginTransaction())
+            {
+                foreach (var brand in brands)
+                {
+                    context.Brands.Add(brand);
+                }
+
+                context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT [dbo].[Brands] ON");
+                context.SaveChanges();
+                context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT [dbo].[Brands] OFF");
+                trans.Commit();
+            }
+
+            var products = new List<Product>()
             {
                 new Product()
                 {
@@ -397,36 +427,18 @@ namespace AzureAspNetCore.Infrastructure.Implementations
                     BrandId = 3
                 },
             };
-
-        }
-
-        public IEnumerable<Brand> GetBrands()
-        {
-
-            return _brands;
-        }
-
-        public IEnumerable<Product> GetProducts(ProductFilter filter)
-        {
-            var products = _products;
-            if (filter != null)
+            using (var trans = context.Database.BeginTransaction())
             {
-                if (filter.SectionId.HasValue)
-                    products = _products.Where(p => p.SectionId.Equals(filter.SectionId)).ToList();
-                if (filter.BrandId.HasValue)
-                    products = _products.Where(p => p.BrandId.Equals(filter.BrandId)).ToList();
+                foreach (var product in products)
+                {
+                    context.Products.Add(product);
+                }
+
+                context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT [dbo].[Products] ON");
+                context.SaveChanges();
+                context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT [dbo].[Products] OFF");
+                trans.Commit();
             }
-            return products;
-        }
-
-        public int GetBrandProductsCount(int brandId)
-        {
-            return _products.Count(p => p.BrandId == brandId);
-        }
-
-        public IEnumerable<Section> GetSections()
-        {
-            return _sections;
         }
     }
 }
