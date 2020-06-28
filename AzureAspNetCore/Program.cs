@@ -18,20 +18,20 @@ namespace AzureAspNetCore
         {
             var host = CreateHostBuilder(args).Build();
 
-            using (var scope = host.Services.CreateScope())
-            {
-                var services = scope.ServiceProvider;
-                try
-                {
-                    var context = services.GetRequiredService<AzureAspNetCoreContext>();
-                    DBInitializer.Initialize(context);
-                }
-                catch (Exception ex)
-                {
-                    var logger = services.GetRequiredService<ILogger<Program>>();
-                    logger.LogError(ex, "An error occured while seeding the database.");
-                }
-            }
+            //using (var scope = host.Services.CreateScope())
+            //{
+            //    var services = scope.ServiceProvider;
+            //    try
+            //    {
+            //        var context = services.GetRequiredService<AzureAspNetCoreContext>();
+            //        DBInitializer.Initialize(context);
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        var logger = services.GetRequiredService<ILogger<Program>>();
+            //        logger.LogError(ex, "An error occured while seeding the database.");
+            //    }
+            //}
 
             host.Run();
         }
