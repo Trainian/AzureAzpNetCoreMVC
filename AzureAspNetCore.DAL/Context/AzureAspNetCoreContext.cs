@@ -13,7 +13,7 @@ namespace AzureAspNetCore.DAL.Context
     {
         public AzureAspNetCoreContext(DbContextOptions options) : base(options)
         {
-
+            Database.EnsureCreated();
         }
 
         public DbSet<Brand> Brands { get; set; }

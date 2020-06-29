@@ -1,0 +1,62 @@
+﻿@model UserView
+
+@{
+    ViewBag.Title = "Войти";
+}
+
+<section id="form"><!--form-->
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4 col-sm-offset-1">
+                <div class="login-form"><!--login form-->
+                    <h2>Войдите</h2>
+                    <form asp-controller="Account" asp-action="Login">
+                        <div asp-validation-summary="ModelOnly" class="alert-danger text-danger"></div>
+                        <div class="form-group">
+                            <input type="text" placeholder="@Html.DisplayNameFor(model => model.Name)">
+                            <span asp-validation-for="Name" class="alert-danger text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" placeholder="@Html.DisplayNameFor(model => model.Password)">
+                            <span asp-validation-for="Password" class="alert-danger text-danger"></span>
+                        </div>
+                        <span>
+                            <input type="checkbox" class="checkbox" name="NotLogout">
+                            Больше не спрашивать
+                        </span>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-default">Войти</button>
+                        </div>
+                    </form>
+                </div><!--/login form-->
+            </div>
+            <div class="col-sm-1">
+                <h2 class="or">ИЛИ</h2>
+            </div>
+            <div class="col-sm-4">
+                <div class="signup-form"><!--sign up form-->
+                    <h2>Зарегестрируйтесь!</h2>
+                    <form asp-controller="Account" asp-action="Register" asp-antiforgery="true">
+                        <div asp-validation-summary="ModelOnly" class="alert-danger text-danger"></div>
+                        <div class="form-group">
+                            <input type="text" name="Name" placeholder="@Html.DisplayNameFor(model => model.Name)"/>
+                            <span asp-validation-for="Name" class="alert-danger text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" name="Password" placeholder="@Html.DisplayNameFor(model => model.Password)" />
+                            <span asp-validation-for="Password" class="alert-danger text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" name="ConfirmPassword" placeholder="@Html.DisplayNameFor(model => model.ConfirmPassword)"/>
+                            <span asp-validation-for="ConfirmPassword"></span>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-default">Регистрация</button>
+                        </div>
+                    </form>
+                </div><!--/sign up form-->
+            </div>
+        </div>
+    </div>
+</section>
+

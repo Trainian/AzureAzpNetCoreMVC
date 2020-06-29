@@ -49,15 +49,15 @@ namespace AzureAspNetCore
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
                 options.Lockout.MaxFailedAccessAttempts = 10;
                 options.Lockout.AllowedForNewUsers = true;
-                options.User.RequireUniqueEmail = true;
+                //options.User.RequireUniqueEmail = true;
             });
 
             services.ConfigureApplicationCookie(options =>
             {
                 options.Cookie.HttpOnly = true;
-                options.Cookie.Expiration = TimeSpan.FromDays(150);
-                options.LoginPath = "/Account/Login";
-                options.LogoutPath = "/Account/Logout";
+                options.ExpireTimeSpan = TimeSpan.FromDays(150);
+                options.LoginPath = "/Account/";
+                options.LogoutPath = "/Account/";
                 options.AccessDeniedPath = "/Account/AccesDenied";
                 options.SlidingExpiration = true;
             });

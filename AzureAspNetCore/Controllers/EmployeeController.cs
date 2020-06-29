@@ -5,11 +5,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using AzureAspNetCore.Infrastructure.Interfaces;
 using AzureAspNetCore.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AzureAspNetCore.Controllers
 {
+    [Authorize]
     public class EmployeeController : Controller
     {
         private readonly IEmployeesData _employeesData;

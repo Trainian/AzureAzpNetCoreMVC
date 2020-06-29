@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace AzureAspNetCore.Models
 {
+    [Authorize]
     public class EmployeeViews
     {
         [Required(AllowEmptyStrings = false, ErrorMessage = "ID не может быть пустым")]
