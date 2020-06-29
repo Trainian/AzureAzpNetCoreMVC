@@ -5,6 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20200629200557_AddAdministrator.cs" />
+    <Compile Remove="Migrations\20200629200557_AddAdministrator.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\AzureAspNetCore.Domain\AzureAspNetCore.Domain.csproj" />
   </ItemGroup>
 

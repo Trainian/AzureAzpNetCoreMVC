@@ -27,6 +27,7 @@ namespace AzureAspNetCore.Controllers
             return View(employees);
         }
 
+        [Authorize(Roles = "Admin")]
         public IActionResult EmployeeView(int id)
         {
             var employee = _employeesData.GetByID(id);
@@ -36,6 +37,7 @@ namespace AzureAspNetCore.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public IActionResult EmployeeView(EmployeeViews employee)
         {
             if (ModelState.IsValid)
@@ -60,6 +62,7 @@ namespace AzureAspNetCore.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         public IActionResult EmployeeDelete(int id)
         {
             _employeesData.Delete(id);

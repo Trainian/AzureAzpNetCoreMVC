@@ -410,6 +410,32 @@ namespace AzureAspNetCore.DAL.Context
                 }
                 #endregion
             );
+
+            //User - Admin
+            modelBuilder.Entity<Role>().HasData(
+                    new Role() {Id = "0", Name = "Admin", NormalizedName = "Admin"}
+            );
+
+            //Role - Admin
+            var hash = new PasswordHasher<User>();
+            modelBuilder.Entity<User>().HasData(
+                new User()
+                {
+                    Id = "0",
+                    UserName = "Admin",
+                    NormalizedUserName = "Admin",
+                    PasswordHash = hash.HashPassword(null, "Admin")
+                }
+            );
+
+            //UserRole - Admin
+            modelBuilder.Entity<IdentityUserRole<string>>().HasData(
+                new IdentityUserRole<string>
+                {
+                    RoleId = "0",
+                    UserId = "0"
+                }
+            );
         }
     }
 }

@@ -50,6 +50,10 @@ namespace AzureAspNetCore
                 options.Lockout.MaxFailedAccessAttempts = 10;
                 options.Lockout.AllowedForNewUsers = true;
                 //options.User.RequireUniqueEmail = true;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireDigit = false;
             });
 
             services.ConfigureApplicationCookie(options =>

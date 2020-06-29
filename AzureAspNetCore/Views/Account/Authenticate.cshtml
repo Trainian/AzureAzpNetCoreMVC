@@ -13,11 +13,11 @@
                     <form asp-controller="Account" asp-action="Login">
                         <div asp-validation-summary="ModelOnly" class="alert-danger text-danger"></div>
                         <div class="form-group">
-                            <input type="text" placeholder="@Html.DisplayNameFor(model => model.Name)">
+                            <input Name="Name" asp-for="Name" type="text" placeholder="@Html.DisplayNameFor(model => model.Name)">
                             <span asp-validation-for="Name" class="alert-danger text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <input type="password" placeholder="@Html.DisplayNameFor(model => model.Password)">
+                            <input name="Password" asp-for="Password"  type="password" placeholder="@Html.DisplayNameFor(model => model.Password)">
                             <span asp-validation-for="Password" class="alert-danger text-danger"></span>
                         </div>
                         <span>
@@ -39,15 +39,15 @@
                     <form asp-controller="Account" asp-action="Register" asp-antiforgery="true">
                         <div asp-validation-summary="ModelOnly" class="alert-danger text-danger"></div>
                         <div class="form-group">
-                            <input type="text" name="Name" placeholder="@Html.DisplayNameFor(model => model.Name)"/>
+                            <input type="text" name="Name" asp-for="Name" placeholder="@Html.DisplayNameFor(model => model.Name)"/>
                             <span asp-validation-for="Name" class="alert-danger text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <input type="password" name="Password" placeholder="@Html.DisplayNameFor(model => model.Password)" />
+                            <input type="password" name="Password" asp-for="Password" placeholder="@Html.DisplayNameFor(model => model.Password)" />
                             <span asp-validation-for="Password" class="alert-danger text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <input type="password" name="ConfirmPassword" placeholder="@Html.DisplayNameFor(model => model.ConfirmPassword)"/>
+                            <input type="password" name="ConfirmPassword" asp-for="ConfirmPassword" placeholder="@Html.DisplayNameFor(model => model.ConfirmPassword)"/>
                             <span asp-validation-for="ConfirmPassword"></span>
                         </div>
                         <div class="form-group">

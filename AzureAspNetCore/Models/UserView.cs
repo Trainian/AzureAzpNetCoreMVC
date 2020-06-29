@@ -17,7 +17,7 @@ namespace AzureAspNetCore.Models
         [Display(Name = "Пароль", AutoGenerateField = false)]
         public string Password { get; set; }
 
-        [Required, DataType(DataType.Password), Compare(nameof(Password))]
+        [Required, DataType(DataType.Password), Compare(nameof(Password), ErrorMessage = "Пароли должны совпадать")]
         [DisplayName("Пароль повторно")]
         public string ConfirmPassword { get; set; }
     }

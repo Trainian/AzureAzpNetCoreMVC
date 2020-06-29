@@ -6,6 +6,7 @@ using AzureAspNetCore.Domain.Entities;
 using AzureAspNetCore.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace AzureAspNetCore.Controllers
 {
@@ -14,7 +15,7 @@ namespace AzureAspNetCore.Controllers
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<IdentityRole> roles)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -26,17 +27,54 @@ namespace AzureAspNetCore.Controllers
             return View("Authenticate", new UserView());
         }
 
-        [HttpPost]
-        public IActionResult Login(User user)
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<IActionResult> Login(UserView model)
         {
-            return View();
+            ModelState["ConfirmPassword"].ValidationState = ModelValidationState.Valid;
+            if (ModelState.IsValid)
+            {
+                var loginResult = await _signInManager.PasswordSignInAsync(model.Name, model.Password, true, false);
+                if (loginResult.Succeeded)
+                {
+                    return RedirectToAction("Index", "Employee");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Не верный логин или пароль");
+                }
+            }
+            return View("Authenticate", model);
         }
 
 
         [HttpPost, ValidateAntiForgeryToken]
-        public IActionResult Register(UserView user)
+        public async Task<IActionResult> Register(UserView model)
         {
-            return View(user);
+            if (ModelState.IsValid)
+            {
+                var user = new User(){UserName = model.Name};
+                var createResult = await _userManager.CreateAsync(user, model.Password);
+                if (createResult.Succeeded)
+                {
+                    await _signInManager.SignInAsync(user, true);
+                    return RedirectToAction("Index", "Employee");
+                }
+                else
+                {
+                    foreach (var error in createResult.Errors)
+                    {
+                        ModelState.AddModelError("", error.Description);
+                    }
+                }
+            }
+            return View("Authenticate", model);
+        }
+
+        
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
         }
     }
 }
