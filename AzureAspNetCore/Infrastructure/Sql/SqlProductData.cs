@@ -6,6 +6,7 @@ using AzureAspNetCore.DAL.Context;
 using AzureAspNetCore.Domain.Entities;
 using AzureAspNetCore.Infrastructure.Interfaces;
 using AzureAspNetCore.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace AzureAspNetCore.Infrastructure.Sql
 {
@@ -30,7 +31,7 @@ namespace AzureAspNetCore.Infrastructure.Sql
 
         public IEnumerable<Product> GetProducts(ProductFilter filter)
         {
-            var products = _context.Products.AsQueryable();
+            var products = _context.Products.Include(c => c.Brand).Include(c => c.Section).AsQueryable();
             if (filter != null)
             {
                 if (filter.SectionId.HasValue)
@@ -44,6 +45,11 @@ namespace AzureAspNetCore.Infrastructure.Sql
         public int GetBrandProductsCount(int brandId)
         {
             return _context.Products.Count(p => p.BrandId == brandId);
+        }
+
+        public Product GetProductById(int productId)
+        {
+            return _context.Products.Include(c => c.Brand).Include(c => c.Section).FirstOrDefault(c => c.Id.Equals(productId));
         }
     }
 }

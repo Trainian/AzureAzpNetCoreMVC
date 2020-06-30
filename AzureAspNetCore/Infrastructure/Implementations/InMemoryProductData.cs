@@ -424,6 +424,11 @@ namespace AzureAspNetCore.Infrastructure.Implementations
             return _products.Count(p => p.BrandId == brandId);
         }
 
+        public Product GetProductById(int brandId)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<Section> GetSections()
         {
             return _sections;

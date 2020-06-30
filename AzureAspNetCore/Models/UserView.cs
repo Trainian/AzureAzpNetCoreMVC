@@ -22,5 +22,7 @@ namespace AzureAspNetCore.Models
         public string ConfirmPassword { get; set; }
 
         public bool LongCoockie { get; set; }
+
+        public string ReturnURL { get; set; }
     }
 }

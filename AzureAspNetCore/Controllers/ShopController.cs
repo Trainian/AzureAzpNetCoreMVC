@@ -36,9 +36,10 @@ namespace AzureAspNetCore.Controllers
             return View(model); 
         }
 
-        public IActionResult ProductDetails()
+        public IActionResult ProductDetails(int productId)
         {
-            return View();
+            var product = _products.GetProductById(productId);
+            return View(product);
         }
 
         public IActionResult Checkout()
