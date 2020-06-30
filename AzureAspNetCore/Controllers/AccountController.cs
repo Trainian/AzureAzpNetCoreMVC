@@ -14,11 +14,13 @@ namespace AzureAspNetCore.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
+        private readonly RoleManager<IdentityRole> _roles;
 
         public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<IdentityRole> roles)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _roles = roles;
         }
 
         [HttpGet]
@@ -33,7 +35,7 @@ namespace AzureAspNetCore.Controllers
             ModelState["ConfirmPassword"].ValidationState = ModelValidationState.Valid;
             if (ModelState.IsValid)
             {
-                var loginResult = await _signInManager.PasswordSignInAsync(model.Name, model.Password, true, false);
+                var loginResult = await _signInManager.PasswordSignInAsync(model.Name, model.Password, model.LongCoockie, false);
                 if (loginResult.Succeeded)
                 {
                     return RedirectToAction("Index", "Employee");

@@ -20,5 +20,7 @@ namespace AzureAspNetCore.Models
         [Required, DataType(DataType.Password), Compare(nameof(Password), ErrorMessage = "Пароли должны совпадать")]
         [DisplayName("Пароль повторно")]
         public string ConfirmPassword { get; set; }
+
+        public bool LongCoockie { get; set; }
     }
 }

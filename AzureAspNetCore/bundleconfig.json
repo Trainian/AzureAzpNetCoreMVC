@@ -1,0 +1,21 @@
+[
+  {
+    "outputFileName": "wwwroot/js/bundle.min.js",
+    "inputFiles": [
+      "wwwroot/js/price-range.js",
+      "wwwroot/js/main.js",
+      "wwwroot/js/contact.js",
+      "wwwroot/js/gmaps.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/css/bundle.min.css",
+    "inputFiles": [
+      "wwwroot/css/responsive.css",
+      "wwwroot/css/price-range.css",
+      "wwwroot/css/prettyPhoto.css",
+      "wwwroot/css/main.css",
+      "wwwroot/css/animate.css"
+    ]
+  }
+]
