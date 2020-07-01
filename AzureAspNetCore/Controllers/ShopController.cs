@@ -38,6 +38,8 @@ namespace AzureAspNetCore.Controllers
 
         public IActionResult ProductDetails(int productId)
         {
+            if (productId == 0)
+                productId = 1;
             var product = _products.GetProductById(productId);
             return View(product);
         }

@@ -127,70 +127,70 @@ namespace AzureAspNetCore.DAL.Context
                 {
                     Id = 8,
                     Name = "Fendi",
-                    ParentId = 6,
+                    ParentId = 7,
                     Order = 0
                 },
                 new Section()
                 {
                     Id = 9,
                     Name = "Guess",
-                    ParentId = 6,
+                    ParentId = 7,
                     Order = 1
                 },
                 new Section()
                 {
                     Id = 10,
                     Name = "Valentino",
-                    ParentId = 6,
+                    ParentId = 7,
                     Order = 2
                 },
                 new Section()
                 {
                     Id = 11,
                     Name = "Dior",
-                    ParentId = 6,
+                    ParentId = 7,
                     Order = 3
                 },
                 new Section()
                 {
                     Id = 12,
                     Name = "Versace",
-                    ParentId = 6,
+                    ParentId = 7,
                     Order = 4
                 },
                 new Section()
                 {
                     Id = 13,
                     Name = "Armani",
-                    ParentId = 6,
+                    ParentId = 7,
                     Order = 5
                 },
                 new Section()
                 {
                     Id = 14,
                     Name = "Prada",
-                    ParentId = 6,
+                    ParentId = 7,
                     Order = 6
                 },
                 new Section()
                 {
                     Id = 15,
                     Name = "Dolce and Gabbana",
-                    ParentId = 6,
+                    ParentId = 7,
                     Order = 7
                 },
                 new Section()
                 {
                     Id = 16,
                     Name = "Chanel",
-                    ParentId = 6,
+                    ParentId = 7,
                     Order = 8
                 },
                 new Section()
                 {
                     Id = 17,
                     Name = "Gucci",
-                    ParentId = 6,
+                    ParentId = 7,
                     Order = 9
                 },
                 new Section()
@@ -204,35 +204,35 @@ namespace AzureAspNetCore.DAL.Context
                 {
                     Id = 19,
                     Name = "Fendi",
-                    ParentId = 17,
+                    ParentId = 18,
                     Order = 0
                 },
                 new Section()
                 {
                     Id = 20,
                     Name = "Guess",
-                    ParentId = 17,
+                    ParentId = 18,
                     Order = 1
                 },
                 new Section()
                 {
                     Id = 21,
                     Name = "Valentino",
-                    ParentId = 17,
+                    ParentId = 18,
                     Order = 2
                 },
                 new Section()
                 {
                     Id = 22,
                     Name = "Dior",
-                    ParentId = 17,
+                    ParentId = 18,
                     Order = 3
                 },
                 new Section()
                 {
                     Id = 23,
                     Name = "Versace",
-                    ParentId = 17,
+                    ParentId = 18,
                     Order = 4
                 },
                 new Section()
