@@ -1,4 +1,6 @@
 ﻿
+@model CartView
+
 @{
     ViewBag.Title = "Корзина";
 }
@@ -12,7 +14,7 @@
                 </ol>
             </div>
 
-            @await Html.PartialAsync("_CartInfo")
+            @await Html.PartialAsync("_CartInfo", @Model)
             
             @await Html.PartialAsync("_DoAction")
 

@@ -44,14 +44,5 @@ namespace AzureAspNetCore.Controllers
             return View(product);
         }
 
-        public IActionResult Checkout()
-        {
-            return View();
-        }
-
-        public IActionResult Cart()
-        {
-            return View();
-        }
     }
 }

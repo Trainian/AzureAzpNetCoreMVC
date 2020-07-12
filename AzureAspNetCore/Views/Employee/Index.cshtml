@@ -2,20 +2,19 @@
 @{
     Layout = "_Layout";
 }
-
 <div class="container">
     <a class="btn btn-success" asp-controller="Employee" asp-action="EmployeeView" asp-route-id="0">Add new Employee <i class="fas fa-user-plus"></i></a>
     <br/>
     <table class="table table-striped">
         <thead>
-            <tr>
-                <th scope="col">Id</th>
-                <th scope="col">First Name</th>
-                <th scope="col">Last Name</th>
-                <th scope="col">Age</th>
-                <th scope="col">Edit</th>
-                <th scope="col">Delete</th>
-            </tr>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">First Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">Age</th>
+            <th scope="col">Edit</th>
+            <th scope="col">Delete</th>
+        </tr>
         </thead>
         <tbody>
         @foreach (var employee in Model)
