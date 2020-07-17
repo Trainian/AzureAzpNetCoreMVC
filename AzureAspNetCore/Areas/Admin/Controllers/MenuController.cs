@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AzureAspNetCore.Areas.Admin.Controllers
 {
+    [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class MenuController : Controller
     {
         private readonly IEmployeesData employeesData;
@@ -21,8 +23,6 @@ namespace AzureAspNetCore.Areas.Admin.Controllers
             this.userManager = userManager;
         }
 
-        [Area("Admin")]
-        [Authorize(Roles = "Admin")]
         public IActionResult Index()
         {
             ViewBag.Title = "Панель";
