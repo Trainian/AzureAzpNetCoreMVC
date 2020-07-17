@@ -85,6 +85,9 @@ namespace AzureAspNetCore
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
+                    "Areas",
+                    "{area:exists}/{controller=Menu}/{action=Index}/{id?}");
+                endpoints.MapControllerRoute(
                     "Default",
                     "{controller=Employee}/{action=Index}/{id?}");
             });
