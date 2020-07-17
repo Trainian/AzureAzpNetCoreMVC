@@ -97,6 +97,7 @@ a#scrollUp i{
 
 .social-icons ul li{
 	display:inline-block;
+    margin-left: 10px;
 }
 
 .social-icons ul li a i {

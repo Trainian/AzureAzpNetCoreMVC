@@ -19,8 +19,8 @@ namespace AzureAspNetCore.ViewComponents
 
         public IViewComponentResult Invoke()
         {
-            var brends = GetBrands();
-            return View(brends);
+            var brands = GetBrands();
+            return View(brands);
         }
 
         private List<BrandView> GetBrands()

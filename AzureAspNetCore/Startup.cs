@@ -65,6 +65,9 @@ namespace AzureAspNetCore
                 options.AccessDeniedPath = "/Account/AccesDenied";
                 options.SlidingExpiration = true;
             });
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddTransient<ICartService, CoockieCartService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
