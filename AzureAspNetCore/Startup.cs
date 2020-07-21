@@ -15,6 +15,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace AzureAspNetCore
 {
@@ -73,9 +74,14 @@ namespace AzureAspNetCore
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");
             }
 
             app.UseStaticFiles();
@@ -84,6 +90,13 @@ namespace AzureAspNetCore
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.Run(async (context) =>
+            {
+                int x = 0;
+                int y = 8 / x;
+                await context.Response.WriteAsync($"Result = {y}");
+            });
 
             app.UseEndpoints(endpoints =>
             {
