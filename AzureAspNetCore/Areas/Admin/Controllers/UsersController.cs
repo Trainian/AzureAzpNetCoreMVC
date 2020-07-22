@@ -14,16 +14,24 @@ namespace AzureAspNetCore.Areas.Admin.Controllers
     public class UsersController : Controller
     {
         private readonly UserManager<User> _userManager;
+        private readonly RoleManager<Role> _roleManager;
 
-        public UsersController(UserManager<User> userManager)
+        public UsersController(UserManager<User> userManager, RoleManager<Role> roleManager)
         {
             _userManager = userManager;
+            _roleManager = roleManager;
         }
+
         [HttpGet]
         public IActionResult Index()
         {
             var users = _userManager.Users.ToList();
-            return View(users);
+            foreach (var user in users)
+            {
+                var roles = _userManager.GetRolesAsync(user);
+
+            }
+            return View();
         }
     }
 }

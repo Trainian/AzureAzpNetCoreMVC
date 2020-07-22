@@ -1344,4 +1344,8 @@
     <ProjectReference Include="..\AzureAspNetCore.Domain\AzureAspNetCore.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Infrastructure\Implementations\" />
+  </ItemGroup>
+
 </Project>

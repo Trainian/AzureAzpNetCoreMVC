@@ -24,6 +24,6 @@ namespace AzureAspNetCore.Areas.Admin.Models
         public string PhoneNumber { get; set; }
 
         [DisplayName("Роль")]
-        public string Role { get; set; }
+        public List<string> Role { get; set; }
     }
 }

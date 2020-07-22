@@ -91,13 +91,6 @@ namespace AzureAspNetCore
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.Run(async (context) =>
-            {
-                int x = 0;
-                int y = 8 / x;
-                await context.Response.WriteAsync($"Result = {y}");
-            });
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
