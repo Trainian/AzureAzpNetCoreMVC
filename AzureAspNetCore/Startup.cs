@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AzureAspNetCore.Areas.Admin.Infrastructure.Implementations;
+using AzureAspNetCore.Areas.Admin.Infrastructure.Interfaces;
 using AzureAspNetCore.DAL.Context;
 using AzureAspNetCore.Domain.Entities;
 using AzureAspNetCore.Infrastructure.Implementations;
@@ -36,6 +38,8 @@ namespace AzureAspNetCore
             services.AddSingleton<IEmployeesData, InMemoryEmployeesData>();
 
             services.AddTransient<IProductData, SqlProductData>();
+
+            services.AddSingleton<IUserService, UserService>();
 
             services.AddDbContext<AzureAspNetCoreContext>(options =>
                 options.UseSqlServer(_configuration.GetConnectionString("DBConnection")));

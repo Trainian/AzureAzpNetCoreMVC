@@ -6,6 +6,7 @@ using AzureAspNetCore.Areas.Admin.Infrastructure.Interfaces;
 using AzureAspNetCore.Areas.Admin.Models;
 using AzureAspNetCore.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace AzureAspNetCore.Areas.Admin.Infrastructure.Implementations
 {
@@ -22,7 +23,20 @@ namespace AzureAspNetCore.Areas.Admin.Infrastructure.Implementations
 
         public IEnumerable<UserView> GetAll()
         {
-            throw new NotImplementedException();
+            var usersView = new List<UserView>();
+            var usersDB = _userManager.Users.ToList();
+            
+            foreach (var user in usersDB)
+            {
+                usersView.Add(new UserView()
+                {
+                    Id = int.Parse(user.Id),
+                    UserName = user.UserName,
+                    Email = user.Email,
+                    PhoneNumber = user.PhoneNumber,
+                });
+            }
+            return usersView;
         }
 
         public UserView GetById()
