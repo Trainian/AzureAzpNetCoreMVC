@@ -412,8 +412,8 @@ namespace AzureAspNetCore.DAL.Context
             );
 
             //User - Admin
-            modelBuilder.Entity<Role>().HasData(
-                    new Role() {Id = "0", Name = "Admin", NormalizedName = "Admin"}
+            modelBuilder.Entity<IdentityRole>().HasData(
+                    new IdentityRole() {Id = "0", Name = "Admin", NormalizedName = "Admin"}
             );
 
             //Role - Admin

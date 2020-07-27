@@ -4,14 +4,16 @@ using AzureAspNetCore.DAL.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AzureAspNetCore.DAL.Migrations
 {
     [DbContext(typeof(AzureAspNetCoreContext))]
-    partial class AzureAspNetCoreContextModelSnapshot : ModelSnapshot
+    [Migration("20200725113812_NewRole")]
+    partial class NewRole
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

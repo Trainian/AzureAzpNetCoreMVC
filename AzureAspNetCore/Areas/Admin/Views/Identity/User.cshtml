@@ -1,0 +1,72 @@
+﻿@using AzureAspNetCore.Areas.Admin.Models
+@model AzureAspNetCore.Areas.Admin.Models.UserView
+@{
+    Layout = "_Layout";
+}
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- left column -->
+            <div class="col-md-6">
+                <!-- general form elements -->
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Редактирование пользователя</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form role="form" asp-action="User">
+                        <div asp-validation-summary="ModelOnly" class="alert-danger text-danger"></div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label asp-for="UserName"></label>
+                                <input type="text" value="@Model.UserName" asp-for="UserName">
+                                <span asp-validation-for="UserName" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Email"></label>
+                                <input type="text" value="@Model.Email" asp-for="Email">
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="PhoneNumber"></label>
+                                <input type="text" value="@Model.PhoneNumber" asp-for="PhoneNumber">
+                                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                            </div>
+                            @{
+                                var roles = (List<RoleView>)ViewBag.Roles;
+                                bool check = false;
+
+                                @foreach (var role in roles)
+                                {
+                                    foreach (var roleUser in Model.Role)
+                                    {
+                                        if (roleUser == role.Name)
+                                        {
+                                            check = true;
+                                        }
+                                    }
+                                    <div class="custom-control custom-checkbox">
+                                        <input class="custom-control-input" type="checkbox" id="customCheckbox" @if(check) {@:checked 
+                                                                                                                } value="@role.Id" >
+                                        <label for="customCheckbox" class="custom-control-label">@role.Name</label>
+                                    </div>
+                                    check = false;
+                                }
+                            }
+                        </div>
+                        <!-- /.card-body -->
+
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary">Сохранить</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+                

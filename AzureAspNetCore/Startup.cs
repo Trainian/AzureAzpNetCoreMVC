@@ -39,7 +39,9 @@ namespace AzureAspNetCore
 
             services.AddTransient<IProductData, SqlProductData>();
 
-            services.AddSingleton<IUserService, UserService>();
+            services.AddTransient<IUserService, UserService>();
+
+            services.AddTransient<IRoleService, RoleService>();
 
             services.AddDbContext<AzureAspNetCoreContext>(options =>
                 options.UseSqlServer(_configuration.GetConnectionString("DBConnection")));

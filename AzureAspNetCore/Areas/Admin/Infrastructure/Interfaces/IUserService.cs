@@ -12,24 +12,31 @@ namespace AzureAspNetCore.Areas.Admin.Infrastructure.Interfaces
         /// Вернуть список пользователей
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<UserView> GetAll();
+        IEnumerable<UserView> GetAll();
 
         /// <summary>
         /// Вывести пользователя по Id
         /// </summary>
         /// <returns></returns>
-        public UserView GetById();
+        UserView GetById(string id);
+
+        /// <summary>
+        /// Обновить данные пользователя
+        /// </summary>
+        /// <param name="user"></param>
+        void UpdateUser(UserView user);
 
         /// <summary>
         /// Создать нового пользователя
         /// </summary>
         /// <param name="user"></param>
-        public void CreateNew(UserView user);
+        /// <param name="password"></param>
+        void CreateNew(UserView user, string password);
 
         /// <summary>
         /// Удалить пользователя
         /// </summary>
         /// <param name="id"></param>
-        public void Delete(int id);
+        void Delete(string id);
     }
 }

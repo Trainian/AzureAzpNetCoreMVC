@@ -9,18 +9,22 @@ namespace AzureAspNetCore.Areas.Admin.Models
 {
     public class UserView
     {
-        public int Id { get; set; }
+        public UserView()
+        {
+            Role = new List<string>();
+        }
+        public string Id { get; set; }
 
         [Required(ErrorMessage = "Имя не может быть пустым")]
         [DisplayName("Пользователь")]
         public string UserName { get; set; }
 
         [DisplayName("Почта")]
-        [EmailAddress]
+        [EmailAddress(ErrorMessage = "Не верная почта")]
         public string Email { get; set; }
 
         [DisplayName("Телефон")]
-        [Phone]
+        [Phone(ErrorMessage = "Не верный телефон")]
         public string PhoneNumber { get; set; }
 
         [DisplayName("Роль")]
