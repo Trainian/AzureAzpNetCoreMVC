@@ -17,7 +17,7 @@ namespace AzureAspNetCore.Areas.Admin.Infrastructure.Implementations
     public class UserService : IUserService
     {
         private readonly UserManager<User> _userManager;
-        private readonly DbContext _context;
+        private readonly AzureAspNetCoreContext _context;
 
         public UserService(UserManager<User> userManager, AzureAspNetCoreContext context)
         {
