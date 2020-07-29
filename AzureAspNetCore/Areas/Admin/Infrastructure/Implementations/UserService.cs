@@ -17,11 +17,13 @@ namespace AzureAspNetCore.Areas.Admin.Infrastructure.Implementations
     public class UserService : IUserService
     {
         private readonly UserManager<User> _userManager;
+        private readonly IRoleService _roleService;
         private readonly AzureAspNetCoreContext _context;
 
-        public UserService(UserManager<User> userManager, AzureAspNetCoreContext context)
+        public UserService(UserManager<User> userManager, IRoleService roleService, AzureAspNetCoreContext context)
         {
             _userManager = userManager;
+            _roleService = roleService;
             _context = context;
         }
 
@@ -38,7 +40,7 @@ namespace AzureAspNetCore.Areas.Admin.Infrastructure.Implementations
                     UserName = user.UserName,
                     Email = user.Email,
                     PhoneNumber = user.PhoneNumber,
-                    Role = (List<string>)_userManager.GetRolesAsync(user).Result
+                    Roles = (List<string>)_userManager.GetRolesAsync(user).Result
             });
             }
             return usersView;
@@ -46,34 +48,34 @@ namespace AzureAspNetCore.Areas.Admin.Infrastructure.Implementations
 
         public UserView GetById(string id)
         {
-            var userDB = _userManager.Users.FirstOrDefault(x => x.Id == id);
+            var userDB = GetUserById(id);
             var userView = new UserView()
             {
                 Id = userDB.Id,
                 UserName = userDB.UserName,
                 Email = userDB.Email,
                 PhoneNumber = userDB.PhoneNumber,
-                Role = (List<string>)_userManager.GetRolesAsync(userDB).Result
+                Roles = (List<string>)_userManager.GetRolesAsync(userDB).Result
             };
             return userView;
         }
 
-        public void UpdateUser(UserView user)
+        public void UpdateUser(UserView userView)
         {
-            var userDB = _userManager.Users.First(x => x.Id == user.Id);
-            userDB.UserName = user.UserName;
-            userDB.Email = user.Email;
-            userDB.PhoneNumber = user.PhoneNumber;
+            var userDB = UserViewToUser(userView);
+            userView.UserName = userDB.UserName;
+            userView.Email = userDB.Email;
+            userView.PhoneNumber = userDB.PhoneNumber;
             _context.SaveChanges();
         }
 
-        public void CreateNew(UserView user, string password)
+        public void CreateNew(UserView userView, string password)
         {
             var userDB = new User()
             {
-                UserName = user.UserName,
-                Email = user.Email,
-                PhoneNumber = user.PhoneNumber
+                UserName = userView.UserName,
+                Email = userView.Email,
+                PhoneNumber = userView.PhoneNumber
             };
             _userManager.CreateAsync(userDB, password);
             _context.SaveChanges();
@@ -81,10 +83,32 @@ namespace AzureAspNetCore.Areas.Admin.Infrastructure.Implementations
 
         public void Delete(string id)
         {
-            var user = _userManager.Users.FirstOrDefault(x => x.Id == id);
+            var user = GetUserById(id);
             _userManager.DeleteAsync(user);
             _context.SaveChanges();
         }
 
+        public void UpdateRoles(UserView userView)
+        {
+            var user = UserViewToUser(userView);
+            var rolesAllDB = _roleService.GetAll();
+            var rolesAll = new List<string>();
+            foreach(var role in rolesAllDB)
+            {
+                rolesAll.Add(role.Name);
+            }
+            _userManager.RemoveFromRolesAsync(user, rolesAll);
+            _userManager.AddToRolesAsync(user, userView.Roles);
+        }
+
+        private User UserViewToUser (UserView userView)
+        {
+            return _userManager.Users.FirstOrDefault(x => x.Id == userView.Id);
+        }
+
+        private User GetUserById (string id)
+        {
+            return _userManager.Users.FirstOrDefault(x => x.Id == id);
+        }
     }
 }

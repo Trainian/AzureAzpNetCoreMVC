@@ -36,7 +36,13 @@ namespace AzureAspNetCore.Areas.Admin.Infrastructure.Interfaces
         /// <summary>
         /// Удалить пользователя
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="userView"></param>
         void Delete(string id);
+
+        /// <summary>
+        /// Обновить роли пользователя
+        /// </summary>
+        /// <param name="userView"></param>        
+        public void UpdateRoles(UserView userView);
     }
 }

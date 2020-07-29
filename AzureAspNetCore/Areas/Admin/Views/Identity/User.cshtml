@@ -35,27 +35,33 @@
                                 <input type="text" value="@Model.PhoneNumber" asp-for="PhoneNumber">
                                 <span asp-validation-for="PhoneNumber" class="text-danger"></span>
                             </div>
-                            @{
-                                var roles = (List<RoleView>)ViewBag.Roles;
-                                bool check = false;
-
-                                @foreach (var role in roles)
-                                {
-                                    foreach (var roleUser in Model.Role)
+                            <div class="form-group">
+                                @{
+                                    var roles = (List<RoleView>)ViewBag.Roles;
+                                    int x = 0;
+                                    @foreach (var role in roles)
                                     {
-                                        if (roleUser == role.Name)
+                                        foreach (var roleUser in Model.Roles)
                                         {
-                                            check = true;
+                                            if (roleUser == role.Name)
+                                            {
+                                                <div class="custom-control custom-checkbox">
+                                                    <input asp-items class="custom-control-input" type="checkbox" id="customCheckbox" checked value="@role.Id">
+                                                    <label for="customCheckbox" class="custom-control-label">@role.Name</label>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="custom-control custom-checkbox">
+                                                    <input asp-for="Roles" class="custom-control-input" type="checkbox" id="customCheckbox" value="@role.Id">
+                                                    <label asp-for="Roles" for="customCheckbox" class="custom-control-label">@role.Name</label>
+                                                </div>
+                                            }
                                         }
+                                        x++;
                                     }
-                                    <div class="custom-control custom-checkbox">
-                                        <input class="custom-control-input" type="checkbox" id="customCheckbox" @if(check) {@:checked 
-                                                                                                                } value="@role.Id" >
-                                        <label for="customCheckbox" class="custom-control-label">@role.Name</label>
-                                    </div>
-                                    check = false;
                                 }
-                            }
+                            </div>
                         </div>
                         <!-- /.card-body -->
 

@@ -25,7 +25,7 @@
                                 <th>@Html.DisplayNameFor(model => model.UserName)</th>
                                 <th>@Html.DisplayNameFor(model => model.Email)</th>
                                 <th>@Html.DisplayNameFor(model => model.PhoneNumber)</th>
-                                <th>@Html.DisplayNameFor(model => model.Role)</th>
+                                <th>@Html.DisplayNameFor(model => model.Roles)</th>
                                 <th>Ред.</th>
                             </tr>
                         </thead>
@@ -38,7 +38,7 @@
                                     <td>@employee.Email</td>
                                     <td>@employee.PhoneNumber</td>
                                     <td>
-                                        @foreach (var role in employee.Role)
+                                        @foreach (var role in employee.Roles)
                                         {
                                             <div>@role</div>
                                         }
@@ -56,7 +56,7 @@
                                 <th>@Html.DisplayNameFor(model => model.UserName)</th>
                                 <th>@Html.DisplayNameFor(model => model.Email)</th>
                                 <th>@Html.DisplayNameFor(model => model.PhoneNumber)</th>
-                                <th>@Html.DisplayNameFor(model => model.Role)</th>
+                                <th>@Html.DisplayNameFor(model => model.Roles)</th>
                                 <th>Ред.</th>
                             </tr>
                         </tfoot>

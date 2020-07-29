@@ -34,7 +34,7 @@ namespace AzureAspNetCore.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> User(string id)
+        public async Task<IActionResult> User(string id) //TODO: Исправить отправку списка Ролей
         {
             var user = new UserView();
             var roles = _roleService.GetAll();
@@ -48,14 +48,14 @@ namespace AzureAspNetCore.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> User(UserView user)
+        public async Task<IActionResult> User(UserView user) //TODO: Исправить получение списка Ролей
         {
             var roles = _roleService.GetAll();
             ViewBag.Roles = roles;
             if (ModelState.IsValid)
             {
                 _userService.UpdateUser(user);
-
+                _userService.UpdateRoles(user);
                 return RedirectToAction("Index");
             }
             else

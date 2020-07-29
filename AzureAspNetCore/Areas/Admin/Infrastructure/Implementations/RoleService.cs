@@ -60,10 +60,5 @@ namespace AzureAspNetCore.Areas.Admin.Infrastructure.Implementations
             _roleManager.DeleteAsync(roleDB);
             _context.SaveChanges();
         }
-
-        public void UpdateRoles(List<string> roles)
-        {
-            
-        }
     }
 }

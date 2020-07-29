@@ -11,7 +11,7 @@ namespace AzureAspNetCore.Areas.Admin.Models
     {
         public UserView()
         {
-            Role = new List<string>();
+            Roles = new List<string>();
         }
         public string Id { get; set; }
 
@@ -28,6 +28,6 @@ namespace AzureAspNetCore.Areas.Admin.Models
         public string PhoneNumber { get; set; }
 
         [DisplayName("Роль")]
-        public List<string> Role { get; set; }
+        public List<string> Roles { get; set; }
     }
 }

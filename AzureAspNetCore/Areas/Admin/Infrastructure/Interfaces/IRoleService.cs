@@ -33,11 +33,5 @@ namespace AzureAspNetCore.Areas.Admin.Infrastructure.Interfaces
         /// </summary>
         /// <param name="id"></param>
         void Delete(string id);
-
-        /// <summary>
-        /// Обновить роли, подключить или отключить
-        /// </summary>
-        /// <param name="roles"></param>
-        void UpdateRoles(List<string> roles);
     }
 }
