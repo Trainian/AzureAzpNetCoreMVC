@@ -34,24 +34,21 @@ namespace AzureAspNetCore.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> User(string id) //TODO: Исправить отправку списка Ролей
+        public async Task<IActionResult> User(string id)
         {
             var user = new UserView();
-            var roles = _roleService.GetAll();
+
             if (!id.IsNullOrWhiteSpace())
             {
                 user = _userService.GetById(id);
-            }
-
-            ViewBag.Roles = roles;
+            }            
+            
             return View(user);
         }
 
         [HttpPost]
-        public async Task<IActionResult> User(UserView user) //TODO: Исправить получение списка Ролей
-        {
-            var roles = _roleService.GetAll();
-            ViewBag.Roles = roles;
+        public async Task<IActionResult> User(UserView user, string password)
+        {            
             if (ModelState.IsValid)
             {
                 _userService.UpdateUser(user);

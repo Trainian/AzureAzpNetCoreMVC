@@ -17,7 +17,7 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                    <a class="btn btn-primary" href="#" role="button">Добавить пользователя <i class="fas fa-user-plus"></i></a>
+                    <a class="btn btn-primary" asp-controller="Identity" asp-action="User" role="button">Добавить пользователя <i class="fas fa-user-plus"></i></a>
                     <table id="dataTable" class="table table-bordered table-striped">
                         <thead>
                             <tr>
@@ -40,7 +40,7 @@
                                     <td>
                                         @foreach (var role in employee.Roles)
                                         {
-                                            <div>@role</div>
+                                            <div>@role.Name</div>
                                         }
                                     </td>
                                     <td>

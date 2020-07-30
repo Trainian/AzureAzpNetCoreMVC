@@ -8,9 +8,11 @@ namespace AzureAspNetCore.Areas.Admin.Models
 {
     public class RoleView
     {
-        public string Id;
+        public string Id { get; set; }
 
         [Required(ErrorMessage = "Название Роли должно быть заполнено !")]
-        public string Name;
+        public string Name { get; set; }
+
+        public bool IsEnable { get; set; }
     }
 }

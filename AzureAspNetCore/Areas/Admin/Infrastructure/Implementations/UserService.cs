@@ -40,7 +40,7 @@ namespace AzureAspNetCore.Areas.Admin.Infrastructure.Implementations
                     UserName = user.UserName,
                     Email = user.Email,
                     PhoneNumber = user.PhoneNumber,
-                    Roles = (List<string>)_userManager.GetRolesAsync(user).Result
+                    Roles = GetEnabledRoles(user)
             });
             }
             return usersView;
@@ -55,7 +55,7 @@ namespace AzureAspNetCore.Areas.Admin.Infrastructure.Implementations
                 UserName = userDB.UserName,
                 Email = userDB.Email,
                 PhoneNumber = userDB.PhoneNumber,
-                Roles = (List<string>)_userManager.GetRolesAsync(userDB).Result
+                Roles = GetEnabledRoles(userDB)
             };
             return userView;
         }
@@ -66,7 +66,7 @@ namespace AzureAspNetCore.Areas.Admin.Infrastructure.Implementations
             userView.UserName = userDB.UserName;
             userView.Email = userDB.Email;
             userView.PhoneNumber = userDB.PhoneNumber;
-            _context.SaveChanges();
+            _context.SaveChangesAsync();
         }
 
         public void CreateNew(UserView userView, string password)
@@ -78,14 +78,14 @@ namespace AzureAspNetCore.Areas.Admin.Infrastructure.Implementations
                 PhoneNumber = userView.PhoneNumber
             };
             _userManager.CreateAsync(userDB, password);
-            _context.SaveChanges();
+            _context.SaveChangesAsync();
         }
 
         public void Delete(string id)
         {
             var user = GetUserById(id);
             _userManager.DeleteAsync(user);
-            _context.SaveChanges();
+            _context.SaveChangesAsync();
         }
 
         public void UpdateRoles(UserView userView)
@@ -93,12 +93,22 @@ namespace AzureAspNetCore.Areas.Admin.Infrastructure.Implementations
             var user = UserViewToUser(userView);
             var rolesAllDB = _roleService.GetAll();
             var rolesAll = new List<string>();
-            foreach(var role in rolesAllDB)
+            var rolesEnabled = new List<string>();
+
+            foreach(var role in rolesAllDB) // Все роли в БД
             {
                 rolesAll.Add(role.Name);
             }
-            _userManager.RemoveFromRolesAsync(user, rolesAll);
-            _userManager.AddToRolesAsync(user, userView.Roles);
+
+            foreach(var role in userView.Roles) // Все роли используемые пользователем
+            {
+                if (role.IsEnable)
+                    rolesEnabled.Add(role.Name);
+            }
+
+            _userManager.RemoveFromRolesAsync(user, rolesAll); // Очищаем Роли
+            _userManager.AddToRolesAsync(user, rolesEnabled); // Добавляем актуальные Роли
+            _context.SaveChangesAsync();
         }
 
         private User UserViewToUser (UserView userView)
@@ -109,6 +119,21 @@ namespace AzureAspNetCore.Areas.Admin.Infrastructure.Implementations
         private User GetUserById (string id)
         {
             return _userManager.Users.FirstOrDefault(x => x.Id == id);
+        }
+
+        private List<RoleView> GetEnabledRoles (User userDB)
+        {
+            var enabledRoles = (List<string>)_userManager.GetRolesAsync(userDB).Result;
+            var allRoles = _roleService.GetAll();
+            foreach(var role in allRoles)
+            {
+                foreach(var roleEnable in enabledRoles)
+                {
+                    if (role.Name == roleEnable)
+                        role.IsEnable = true;
+                }
+            }
+            return allRoles.ToList();
         }
     }
 }

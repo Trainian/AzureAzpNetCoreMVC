@@ -37,31 +37,25 @@
                             </div>
                             <div class="form-group">
                                 @{
-                                    var roles = (List<RoleView>)ViewBag.Roles;
-                                    int x = 0;
-                                    @foreach (var role in roles)
+                                    for (int i = 0; i < Model.Roles.Count; i++)
                                     {
-                                        foreach (var roleUser in Model.Roles)
-                                        {
-                                            if (roleUser == role.Name)
-                                            {
-                                                <div class="custom-control custom-checkbox">
-                                                    <input asp-items class="custom-control-input" type="checkbox" id="customCheckbox" checked value="@role.Id">
-                                                    <label for="customCheckbox" class="custom-control-label">@role.Name</label>
-                                                </div>
-                                            }
-                                            else
-                                            {
-                                                <div class="custom-control custom-checkbox">
-                                                    <input asp-for="Roles" class="custom-control-input" type="checkbox" id="customCheckbox" value="@role.Id">
-                                                    <label asp-for="Roles" for="customCheckbox" class="custom-control-label">@role.Name</label>
-                                                </div>
-                                            }
-                                        }
-                                        x++;
+                                        <div class="custom-control custom-checkbox">
+                                            <input asp-for="@Model.Roles[i].IsEnable" class="custom-control-input" type="checkbox" id="customCheckbox" value="@Model.Roles[i].IsEnable">
+                                            <label asp-for="@Model.Roles[i].Name" for="customCheckbox" class="custom-control-label">@Model.Roles[i].Name</label>
+                                            <input type="hidden" asp-for="@Model.Roles[i].Id" />
+                                            <input type="hidden" asp-for="@Model.Roles[i].Name" />
+                                        </div>
                                     }
                                 }
+                                <span asp-validation-for="Roles" class="text-danger"></span>
                             </div>
+                            @if (string.IsNullOrEmpty(Model.UserName))
+                            {
+                                <div class="form-group">
+                                    <label> Пароль </label>
+                                    <input type="text" name="password">
+                                </div>
+                            }
                         </div>
                         <!-- /.card-body -->
 
