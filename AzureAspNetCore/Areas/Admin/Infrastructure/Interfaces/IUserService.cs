@@ -42,7 +42,7 @@ namespace AzureAspNetCore.Areas.Admin.Infrastructure.Interfaces
         /// <summary>
         /// Обновить роли пользователя
         /// </summary>
-        /// <param name="userView"></param>        
-        public void UpdateRoles(UserView userView);
+        /// <param name="userView"></param>
+        public Task UpdateRoles(UserView userView);
     }
 }

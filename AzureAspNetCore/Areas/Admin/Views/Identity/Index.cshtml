@@ -30,7 +30,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (AzureAspNetCore.Areas.Admin.Models.UserView employee in Model)
+                            @foreach (var employee in Model)
                             {
                                 <tr>
                                     @*<td>@employee.Id</td>*@
@@ -38,7 +38,7 @@
                                     <td>@employee.Email</td>
                                     <td>@employee.PhoneNumber</td>
                                     <td>
-                                        @foreach (var role in employee.Roles)
+                                        @foreach (var role in employee.Roles.FindAll(x => x.IsEnable))
                                         {
                                             <div>@role.Name</div>
                                         }

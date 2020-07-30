@@ -63,10 +63,9 @@ namespace AzureAspNetCore.Areas.Admin.Infrastructure.Implementations
         public void UpdateUser(UserView userView)
         {
             var userDB = UserViewToUser(userView);
-            userView.UserName = userDB.UserName;
-            userView.Email = userDB.Email;
-            userView.PhoneNumber = userDB.PhoneNumber;
-            _context.SaveChangesAsync();
+            userDB.UserName = userView.UserName;
+            userDB.Email = userView.Email;
+            userDB.PhoneNumber = userView.PhoneNumber;
         }
 
         public void CreateNew(UserView userView, string password)
@@ -78,17 +77,15 @@ namespace AzureAspNetCore.Areas.Admin.Infrastructure.Implementations
                 PhoneNumber = userView.PhoneNumber
             };
             _userManager.CreateAsync(userDB, password);
-            _context.SaveChangesAsync();
         }
 
         public void Delete(string id)
         {
             var user = GetUserById(id);
             _userManager.DeleteAsync(user);
-            _context.SaveChangesAsync();
         }
 
-        public void UpdateRoles(UserView userView)
+        public async Task UpdateRoles(UserView userView)
         {
             var user = UserViewToUser(userView);
             var rolesAllDB = _roleService.GetAll();
@@ -106,9 +103,8 @@ namespace AzureAspNetCore.Areas.Admin.Infrastructure.Implementations
                     rolesEnabled.Add(role.Name);
             }
 
-            _userManager.RemoveFromRolesAsync(user, rolesAll); // Очищаем Роли
-            _userManager.AddToRolesAsync(user, rolesEnabled); // Добавляем актуальные Роли
-            _context.SaveChangesAsync();
+            await _userManager.RemoveFromRolesAsync(user, rolesAll); // Очищаем Роли
+            await _userManager.AddToRolesAsync(user, rolesEnabled); // Добавляем актуальные Роли
         }
 
         private User UserViewToUser (UserView userView)

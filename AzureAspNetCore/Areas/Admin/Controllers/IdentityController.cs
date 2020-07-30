@@ -52,7 +52,7 @@ namespace AzureAspNetCore.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 _userService.UpdateUser(user);
-                _userService.UpdateRoles(user);
+                await _userService.UpdateRoles(user);
                 return RedirectToAction("Index");
             }
             else
