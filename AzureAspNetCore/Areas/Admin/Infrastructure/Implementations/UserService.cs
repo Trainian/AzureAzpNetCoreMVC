@@ -40,7 +40,7 @@ namespace AzureAspNetCore.Areas.Admin.Infrastructure.Implementations
                     UserName = user.UserName,
                     Email = user.Email,
                     PhoneNumber = user.PhoneNumber,
-                    Roles = GetEnabledRoles(user)
+                    Roles = GetEnabledRoles(user).Result
             });
             }
             return usersView;
@@ -55,7 +55,7 @@ namespace AzureAspNetCore.Areas.Admin.Infrastructure.Implementations
                 UserName = userDB.UserName,
                 Email = userDB.Email,
                 PhoneNumber = userDB.PhoneNumber,
-                Roles = GetEnabledRoles(userDB)
+                Roles = GetEnabledRoles(userDB).Result
             };
             return userView;
         }
@@ -68,7 +68,7 @@ namespace AzureAspNetCore.Areas.Admin.Infrastructure.Implementations
             userDB.PhoneNumber = userView.PhoneNumber;
         }
 
-        public void CreateNew(UserView userView, string password)
+        public async Task CreateNew(UserView userView, string password)
         {
             var userDB = new User()
             {
@@ -76,7 +76,7 @@ namespace AzureAspNetCore.Areas.Admin.Infrastructure.Implementations
                 Email = userView.Email,
                 PhoneNumber = userView.PhoneNumber
             };
-            _userManager.CreateAsync(userDB, password);
+            await _userManager.CreateAsync(userDB, password);
         }
 
         public void Delete(string id)
@@ -117,9 +117,10 @@ namespace AzureAspNetCore.Areas.Admin.Infrastructure.Implementations
             return _userManager.Users.FirstOrDefault(x => x.Id == id);
         }
 
-        private List<RoleView> GetEnabledRoles (User userDB)
+        private async Task<List<RoleView>> GetEnabledRoles (User userDB)
         {
-            var enabledRoles = (List<string>)_userManager.GetRolesAsync(userDB).Result;
+            var enabledRoles = await _userManager.GetRolesAsync(userDB);
+            
             var allRoles = _roleService.GetAll();
             foreach(var role in allRoles)
             {

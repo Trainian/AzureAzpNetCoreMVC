@@ -30,7 +30,6 @@ namespace AzureAspNetCore.Areas.Admin.Infrastructure.Implementations
                     Id = role.Id,
                     Name = role.Name
                 });
-                _context.SaveChanges();
             }
 
             return rolesView;
@@ -51,14 +50,12 @@ namespace AzureAspNetCore.Areas.Admin.Infrastructure.Implementations
         {
             var roleDB = new IdentityRole(roleView.Name);
             _roleManager.CreateAsync(roleDB);
-            _context.SaveChanges();
         }
 
         public void Delete(string id)
         {
             var roleDB = _roleManager.Roles.FirstOrDefault(x => x.Id == id);
             _roleManager.DeleteAsync(roleDB);
-            _context.SaveChanges();
         }
     }
 }

@@ -9,10 +9,6 @@ namespace AzureAspNetCore.Areas.Admin.Models
 {
     public class UserView
     {
-        //public UserView()
-        //{
-        //    Roles = new List<RoleView>();
-        //}
         public string Id { get; set; }
 
         [Required(ErrorMessage = "Имя не может быть пустым")]
@@ -29,5 +25,8 @@ namespace AzureAspNetCore.Areas.Admin.Models
 
         [DisplayName("Роль")]
         public List<RoleView> Roles { get; set; }
+
+        [DisplayName("Пароль")]
+        public string Password { get; set; }
     }
 }

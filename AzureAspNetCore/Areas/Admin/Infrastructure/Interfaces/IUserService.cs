@@ -31,7 +31,7 @@ namespace AzureAspNetCore.Areas.Admin.Infrastructure.Interfaces
         /// </summary>
         /// <param name="user"></param>
         /// <param name="password"></param>
-        void CreateNew(UserView user, string password);
+        Task CreateNew(UserView user, string password);
 
         /// <summary>
         /// Удалить пользователя
@@ -43,6 +43,6 @@ namespace AzureAspNetCore.Areas.Admin.Infrastructure.Interfaces
         /// Обновить роли пользователя
         /// </summary>
         /// <param name="userView"></param>
-        public Task UpdateRoles(UserView userView);
+        Task UpdateRoles(UserView userView);
     }
 }

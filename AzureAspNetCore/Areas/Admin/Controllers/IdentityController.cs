@@ -37,6 +37,7 @@ namespace AzureAspNetCore.Areas.Admin.Controllers
         public async Task<IActionResult> User(string id)
         {
             var user = new UserView();
+            user.Roles = (List<RoleView>)_roleService.GetAll();
 
             if (!id.IsNullOrWhiteSpace())
             {
@@ -49,16 +50,39 @@ namespace AzureAspNetCore.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> User(UserView user, string password)
         {            
+            if(user.Id == null && string.IsNullOrEmpty(password))
+            {
+                ModelState.AddModelError("Password", "Пароль не может быть пустым");
+            }
             if (ModelState.IsValid)
             {
-                _userService.UpdateUser(user);
-                await _userService.UpdateRoles(user);
-                return RedirectToAction("Index");
+                if(user.Id != null)
+                {
+                    _userService.UpdateUser(user);
+                    await _userService.UpdateRoles(user);
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    _userService.CreateNew(user, password);
+                    await _userService.UpdateRoles(user);
+                    return RedirectToAction("Index");
+                }
             }
             else
             {
                 return View(user);
             }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteUser(string id, string redirectUrl)
+        {
+            _userService.Delete(id);
+            if (Url.IsLocalUrl(redirectUrl))
+                return Redirect(redirectUrl);
+            else
+                return RedirectToAction("Index", "Admin");
         }
     }
 }
