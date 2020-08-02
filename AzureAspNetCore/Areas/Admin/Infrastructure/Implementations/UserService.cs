@@ -18,16 +18,14 @@ namespace AzureAspNetCore.Areas.Admin.Infrastructure.Implementations
     {
         private readonly UserManager<User> _userManager;
         private readonly IRoleService _roleService;
-        private readonly AzureAspNetCoreContext _context;
 
-        public UserService(UserManager<User> userManager, IRoleService roleService, AzureAspNetCoreContext context)
+        public UserService(UserManager<User> userManager, IRoleService roleService)
         {
             _userManager = userManager;
             _roleService = roleService;
-            _context = context;
         }
 
-        public IEnumerable<UserView> GetAll()
+        public async Task<IEnumerable<UserView>> GetAll()
         {
             var usersView = new List<UserView>();
             var usersDB = _userManager.Users.ToList();
@@ -40,13 +38,13 @@ namespace AzureAspNetCore.Areas.Admin.Infrastructure.Implementations
                     UserName = user.UserName,
                     Email = user.Email,
                     PhoneNumber = user.PhoneNumber,
-                    Roles = GetEnabledRoles(user).Result
+                    Roles = await GetEnabledRoles(user)
             });
             }
             return usersView;
         }
 
-        public UserView GetById(string id)
+        public async Task<UserView> GetById(string id)
         {
             var userDB = GetUserById(id);
             var userView = new UserView()
@@ -55,12 +53,12 @@ namespace AzureAspNetCore.Areas.Admin.Infrastructure.Implementations
                 UserName = userDB.UserName,
                 Email = userDB.Email,
                 PhoneNumber = userDB.PhoneNumber,
-                Roles = GetEnabledRoles(userDB).Result
+                Roles = await GetEnabledRoles(userDB)
             };
             return userView;
         }
 
-        public void UpdateUser(UserView userView)
+        public async Task UpdateUser(UserView userView)
         {
             var userDB = UserViewToUser(userView);
             userDB.UserName = userView.UserName;
@@ -77,12 +75,13 @@ namespace AzureAspNetCore.Areas.Admin.Infrastructure.Implementations
                 PhoneNumber = userView.PhoneNumber
             };
             await _userManager.CreateAsync(userDB, password);
+            await UpdateRoles(userView);
         }
 
-        public void Delete(string id)
+        public async Task Delete(string id)
         {
             var user = GetUserById(id);
-            _userManager.DeleteAsync(user);
+            await _userManager.DeleteAsync(user);
         }
 
         public async Task UpdateRoles(UserView userView)
@@ -109,7 +108,14 @@ namespace AzureAspNetCore.Areas.Admin.Infrastructure.Implementations
 
         private User UserViewToUser (UserView userView)
         {
-            return _userManager.Users.FirstOrDefault(x => x.Id == userView.Id);
+            if (!String.IsNullOrWhiteSpace(userView.Id))
+            {
+                return _userManager.Users.FirstOrDefault(x => x.Id == userView.Id);
+            }
+            else
+            {
+                return _userManager.Users.FirstOrDefault(x => x.UserName == userView.UserName);
+            }
         }
 
         private User GetUserById (string id)

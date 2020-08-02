@@ -411,12 +411,12 @@ namespace AzureAspNetCore.DAL.Context
                 #endregion
             );
 
-            //User - Admin
+            //Role - Admin
             modelBuilder.Entity<IdentityRole>().HasData(
                     new IdentityRole() {Id = "0", Name = "Admin", NormalizedName = "Admin"}
             );
 
-            //Role - Admin
+            //User - Admin
             var hash = new PasswordHasher<User>();
             modelBuilder.Entity<User>().HasData(
                 new User()

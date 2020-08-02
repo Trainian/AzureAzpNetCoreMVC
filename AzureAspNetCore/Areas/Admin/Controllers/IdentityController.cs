@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -29,7 +30,7 @@ namespace AzureAspNetCore.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var users = _userService.GetAll();
+            var users = await _userService.GetAll().ConfigureAwait(false);
             return View(users);
         }
 
@@ -41,7 +42,7 @@ namespace AzureAspNetCore.Areas.Admin.Controllers
 
             if (!id.IsNullOrWhiteSpace())
             {
-                user = _userService.GetById(id);
+                user = await _userService.GetById(id);
             }            
             
             return View(user);
@@ -58,14 +59,13 @@ namespace AzureAspNetCore.Areas.Admin.Controllers
             {
                 if(user.Id != null)
                 {
-                    _userService.UpdateUser(user);
+                    await _userService.UpdateUser(user);
                     await _userService.UpdateRoles(user);
                     return RedirectToAction("Index");
                 }
                 else
                 {
-                    _userService.CreateNew(user, password);
-                    await _userService.UpdateRoles(user);
+                    await _userService.CreateNew(user, password);
                     return RedirectToAction("Index");
                 }
             }
@@ -75,14 +75,14 @@ namespace AzureAspNetCore.Areas.Admin.Controllers
             }
         }
 
-        [HttpPost]
+
         public async Task<IActionResult> DeleteUser(string id, string redirectUrl)
         {
-            _userService.Delete(id);
+            await _userService.Delete(id);
             if (Url.IsLocalUrl(redirectUrl))
                 return Redirect(redirectUrl);
             else
-                return RedirectToAction("Index", "Admin");
+                return RedirectToAction("Index", "Identity");
         }
     }
 }

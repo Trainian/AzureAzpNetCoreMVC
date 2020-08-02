@@ -12,12 +12,10 @@ namespace AzureAspNetCore.Areas.Admin.Infrastructure.Implementations
     public class RoleService : IRoleService
     {
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly AzureAspNetCoreContext _context;
 
-        public RoleService(RoleManager<IdentityRole> roleManager, AzureAspNetCoreContext context)
+        public RoleService(RoleManager<IdentityRole> roleManager)
         {
             _roleManager = roleManager;
-            _context = context;
         }
         public IEnumerable<RoleView> GetAll()
         {

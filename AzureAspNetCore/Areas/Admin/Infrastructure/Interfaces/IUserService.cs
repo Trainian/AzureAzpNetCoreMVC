@@ -12,19 +12,19 @@ namespace AzureAspNetCore.Areas.Admin.Infrastructure.Interfaces
         /// Вернуть список пользователей
         /// </summary>
         /// <returns></returns>
-        IEnumerable<UserView> GetAll();
+        Task<IEnumerable<UserView>> GetAll();
 
         /// <summary>
         /// Вывести пользователя по Id
         /// </summary>
         /// <returns></returns>
-        UserView GetById(string id);
+        Task<UserView> GetById(string id);
 
         /// <summary>
         /// Обновить данные пользователя
         /// </summary>
         /// <param name="user"></param>
-        void UpdateUser(UserView user);
+        Task UpdateUser(UserView user);
 
         /// <summary>
         /// Создать нового пользователя
@@ -37,7 +37,7 @@ namespace AzureAspNetCore.Areas.Admin.Infrastructure.Interfaces
         /// Удалить пользователя
         /// </summary>
         /// <param name="userView"></param>
-        void Delete(string id);
+        Task Delete(string id);
 
         /// <summary>
         /// Обновить роли пользователя
