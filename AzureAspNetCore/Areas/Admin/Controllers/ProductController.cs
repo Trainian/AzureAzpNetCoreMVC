@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AzureAspNetCore.Infrastructure.Interfaces;
 using AzureAspNetCore.Infrastructure.Sql;
 using AzureAspNetCore.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -13,39 +14,28 @@ namespace AzureAspNetCore.Areas.Admin.Controllers
     [Authorize(Roles = "Admin")]
     public class ProductController : Controller
     {
-        private readonly SqlProductData _sqlProductData;
+        private readonly IProductData _sqlProductData;
 
-        public ProductController(SqlProductData sqlProductData)
+        public ProductController(IProductData sqlProductData)
         {
             _sqlProductData = sqlProductData;
         }
         public IActionResult Products() //TODO: Исправить View для Продуктов, что бы можно было видеть Брэнд и Секцию
         {
             var products = _sqlProductData.GetProducts(new ProductFilter());
-            var model = new CatalogView()
-            {
-                BrandId = null,
-                SectionId = null,
-                Products = products.Select(p => new ProductView()
-                {
-                    Id = p.Id,
-                    Name = p.Name,
-                    Order = p.Order,
-                    ImageUrl = p.ImageUrl,
-                    Price = p.Price
-                }).OrderBy(p => p.Order).ToList()
-            };
-            return View(model);
+            return View(products);
         }
 
         public IActionResult Brends()
         {
-            return View();
+            var brends = _sqlProductData.GetBrands();
+            return View(brends);
         }
 
         public IActionResult Sections()
         {
-            return View();
+            var sections = _sqlProductData.GetSections();
+            return View(sections);
         }
     }
 }
