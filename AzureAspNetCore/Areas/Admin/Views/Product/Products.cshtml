@@ -4,4 +4,95 @@
     Layout = "_Layout";
 }
 
-    <p>@Model</p>
+
+@section Styles
+{
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
+    <link href="~/css/lightbox.min.css" rel="stylesheet" />
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Продукция</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <a class="btn btn-primary" role="button">Добавить продукцию<i class="fas fa-cart-plus"></i></a>
+                    <table id="dataTable" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Позиция</th>
+                                <th>Наименование</th>
+                                <th>Цена</th>
+                                <th>Бренд</th>
+                                <th>Секция</th>
+                                <th>Картинка</th>
+                                <th>Ред.</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var elem in Model)
+                            {
+                                <tr>
+                                    <td>@elem.Order</td>
+                                    <td>@elem.Name</td>
+                                    <td>@elem.Price</td>
+                                    <td>@elem.Brand.Name</td>
+                                    <td>@elem.Section.Name</td>
+                                    <td><a href="~/images/shop/@elem.ImageUrl" data-lightbox="@elem.ImageUrl" data-title="@elem.Name"> <img src="~/images/shop/@elem.ImageUrl" style="max-width: 100px; max-height: 100px"/></a></td>
+                                    <td><a href="#"><i class="fas fa-edit"></i></a></td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Позиция</th>
+                                <th>Наименование</th>
+                                <th>Цена</th>
+                                <th>Бренд</th>
+                                <th>Секция</th>
+                                <th>Картинка</th>
+                                <th>Ред.</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</div>
+<!-- /.container-fluid -->
+@section Scripts{
+    <!-- DataTables -->
+    <script src="~/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="~/js/lightbox.js"></script>
+    <script src="~/js/lightbox-plus-jquery.min.js"></script>
+    <script>
+    // Таблица
+        $(function () {
+            $("#dataTable").DataTable({
+                "responsive": true,
+                "autoWidth": false,
+            });
+        });
+    </script>
+    <script>
+    // Картинка
+        lightbox.option({
+            'resizeDuration': 4000,
+            'wrapAround': true
+        })
+    </script>
+
+
+}
