@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AzureAspNetCore.Domain.Entities;
 using AzureAspNetCore.Infrastructure.Interfaces;
 using AzureAspNetCore.Infrastructure.Sql;
 using AzureAspNetCore.Models;
@@ -20,10 +21,27 @@ namespace AzureAspNetCore.Areas.Admin.Controllers
         {
             _sqlProductData = sqlProductData;
         }
-        public IActionResult Products() //TODO: Исправить View для Продуктов, что бы можно было видеть Брэнд и Секцию
+        public IActionResult Products()
         {
             var products = _sqlProductData.GetProducts(new ProductFilter());
             return View(products);
+        }
+
+        [HttpGet]
+        public IActionResult Product(int? id)
+        {
+            var product = id != null ? _sqlProductData.GetProductById((int)id) : new Product();
+            return View(product);
+        }
+
+        [HttpPost]
+        public IActionResult Product(Product product)
+        {
+            if (product.Id != -1)
+            {
+
+            }
+            return View(product);
         }
 
         public IActionResult Brends()

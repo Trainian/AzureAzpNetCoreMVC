@@ -47,7 +47,7 @@ namespace AzureAspNetCore.Infrastructure.Sql
             return _context.Products.Count(p => p.BrandId == brandId);
         }
 
-        public Product GetProductById(int productId)
+        public Product GetProductById(int? productId)
         {
             return _context.Products.Include(c => c.Brand).Include(c => c.Section).FirstOrDefault(c => c.Id.Equals(productId));
         }
