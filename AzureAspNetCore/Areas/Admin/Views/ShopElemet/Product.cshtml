@@ -1,0 +1,89 @@
+﻿@model AzureAspNetCore.Areas.Admin.Models.ProductView
+
+@{
+    Layout = "_Layout";
+}
+
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- left column -->
+            <div class="col-md-6">
+                <!-- general form elements -->
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Редактирование продукции</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form role="form" asp-action="Product">
+                        <div asp-validation-summary="ModelOnly" class="alert-danger text-danger"></div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label asp-for="Name"></label>
+                                <input type="text" value="@Model.Name" asp-for="Name">
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Order"></label>
+                                <input type="text" value="@Model.Order" asp-for="Order">
+                                <span asp-validation-for="Order" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Price"></label>
+                                <input type="text" value="@Model.Price" asp-for="Price">
+                                <span asp-validation-for="Price" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="ImageUrl"></label>
+                                <input type="file" value="@Model.ImageUrl" asp-for="ImageUrl">
+                                <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="BrandId"></label>
+                                <select asp-for="BrandId">
+                                    @foreach (Brand elem in ViewBag.Brands)
+                                    {
+                                        if (elem.Id == @Model.BrandId)
+                                        {
+                                            <option value="@elem.Id" selected>@elem.Name</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@elem.Id">@elem.Name</option>
+                                        }
+                                    }
+                                </select>
+                                <span asp-validation-for="BrandId" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="SectionId"></label>
+                                <select asp-for="SectionId">
+                                    @foreach (Section elem in ViewBag.Sections)
+                                    {
+                                        if (elem.Id == @Model.SectionId)
+                                        {
+                                            <option value="@elem.Id" selected>@elem.Name</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@elem.Id">@elem.Name</option>
+                                        }
+                                    }
+                                </select>
+                                <span asp-validation-for="SectionId" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary">Сохранить</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

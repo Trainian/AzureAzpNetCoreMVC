@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Product>
+﻿@model IEnumerable<AzureAspNetCore.Areas.Admin.Models.ProductView>
 
 @{
     Layout = "_Layout";
@@ -24,12 +24,12 @@
                     <table id="dataTable" class="table table-bordered table-striped">
                         <thead>
                             <tr>
-                                <th>Позиция</th>
-                                <th>Наименование</th>
-                                <th>Цена</th>
-                                <th>Бренд</th>
-                                <th>Секция</th>
-                                <th>Картинка</th>
+                                <th>@Html.DisplayNameFor(model => model.Order)</th>
+                                <th>@Html.DisplayNameFor(model => model.Name)</th>
+                                <th>@Html.DisplayNameFor(model => model.Price)</th>
+                                <th>@Html.DisplayNameFor(model => model.BrandId)</th>
+                                <th>@Html.DisplayNameFor(model => model.SectionId)</th>
+                                <th>@Html.DisplayNameFor(model => model.ImageUrl)</th>
                                 <th>Ред.</th>
                             </tr>
                         </thead>
@@ -40,21 +40,21 @@
                                     <td>@elem.Order</td>
                                     <td>@elem.Name</td>
                                     <td>@elem.Price</td>
-                                    <td>@elem.Brand.Name</td>
-                                    <td>@elem.Section.Name</td>
+                                    <td>@elem.BrandId</td>
+                                    <td>@elem.SectionId</td>
                                     <td><a href="~/images/shop/@elem.ImageUrl" data-lightbox="@elem.ImageUrl" data-title="@elem.Name"> <img src="~/images/shop/@elem.ImageUrl" style="max-width: 100px; max-height: 100px"/></a></td>
-                                    <td><a href="#"><i class="fas fa-edit"></i></a></td>
+                                    <td><a asp-action="Product" asp-route-id="@elem.Id"><i class="fas fa-edit"></i></a></td>
                                 </tr>
                             }
                         </tbody>
                         <tfoot>
                             <tr>
-                                <th>Позиция</th>
-                                <th>Наименование</th>
-                                <th>Цена</th>
-                                <th>Бренд</th>
-                                <th>Секция</th>
-                                <th>Картинка</th>
+                                <th>@Html.DisplayNameFor(model => model.Order)</th>
+                                <th>@Html.DisplayNameFor(model => model.Name)</th>
+                                <th>@Html.DisplayNameFor(model => model.Price)</th>
+                                <th>@Html.DisplayNameFor(model => model.BrandId)</th>
+                                <th>@Html.DisplayNameFor(model => model.SectionId)</th>
+                                <th>@Html.DisplayNameFor(model => model.ImageUrl)</th>
                                 <th>Ред.</th>
                             </tr>
                         </tfoot>
