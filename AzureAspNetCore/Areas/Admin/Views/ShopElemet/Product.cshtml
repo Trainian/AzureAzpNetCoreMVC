@@ -28,12 +28,12 @@
                             </div>
                             <div class="form-group">
                                 <label asp-for="Order"></label>
-                                <input type="text" value="@Model.Order" asp-for="Order">
+                                <input type="number" value="@Model.Order" asp-for="Order">
                                 <span asp-validation-for="Order" class="text-danger"></span>
                             </div>
                             <div class="form-group">
                                 <label asp-for="Price"></label>
-                                <input type="text" value="@Model.Price" asp-for="Price">
+                                <input type="number" value="@Model.Price" asp-for="Price">
                                 <span asp-validation-for="Price" class="text-danger"></span>
                             </div>
                             <div class="form-group">
@@ -42,38 +42,46 @@
                                 <span asp-validation-for="ImageUrl" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label asp-for="BrandId"></label>
-                                <select asp-for="BrandId">
+                                <label asp-for="Brand"></label>
+                                <select asp-for="Brand">
                                     @foreach (Brand elem in ViewBag.Brands)
                                     {
-                                        if (elem.Id == @Model.BrandId)
+                                        if (elem.Id == @Model.Brand.Id)
                                         {
-                                            <option value="@elem.Id" selected>@elem.Name</option>
+                                            <option value="@elem.Name" selected>@elem.Name</option>
+                                            <option hidden value="@elem.Id"></option>
+                                            <option hidden value="@elem.Order"></option>
                                         }
                                         else
                                         {
                                             <option value="@elem.Id">@elem.Name</option>
+                                            <option hidden value="@elem.Id"></option>
+                                            <option hidden value="@elem.Order"></option>
                                         }
                                     }
                                 </select>
-                                <span asp-validation-for="BrandId" class="text-danger"></span>
+                                <span asp-validation-for="Brand" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label asp-for="SectionId"></label>
-                                <select asp-for="SectionId">
+                                <label asp-for="Section"></label>
+                                <select asp-for="Section">
                                     @foreach (Section elem in ViewBag.Sections)
                                     {
-                                        if (elem.Id == @Model.SectionId)
+                                        if (elem.Id == @Model.Section.Id)
                                         {
                                             <option value="@elem.Id" selected>@elem.Name</option>
+                                            <option hidden value="@elem.Id"></option>
+                                            <option hidden value="@elem.Order"></option>
                                         }
                                         else
                                         {
                                             <option value="@elem.Id">@elem.Name</option>
+                                            <option hidden value="@elem.Id"></option>
+                                            <option hidden value="@elem.Order"></option>
                                         }
                                     }
                                 </select>
-                                <span asp-validation-for="SectionId" class="text-danger"></span>
+                                <span asp-validation-for="Section" class="text-danger"></span>
                             </div>
                         </div>
                         <!-- /.card-body -->

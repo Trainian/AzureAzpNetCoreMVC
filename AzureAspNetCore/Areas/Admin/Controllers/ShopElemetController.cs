@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AzureAspNetCore.Areas.Admin.Models;
 using AzureAspNetCore.Domain.Entities;
 using AzureAspNetCore.Infrastructure.Interfaces;
 using AzureAspNetCore.Infrastructure.Sql;
@@ -35,8 +36,18 @@ namespace AzureAspNetCore.Areas.Admin.Controllers
                     Price = product.Price,
                     Order = product.Order,
                     ImageUrl = product.ImageUrl,
-                    BrandId = product.BrandId,
-                    SectionId = product.SectionId
+                    Brand = new BrandSectionView()
+                    {
+                        Id = product.Brand.Id,
+                        Name = product.Brand.Name,
+                        Order = product.Brand.Order
+                    },
+                    Section = new BrandSectionView()
+                    {
+                        Id = product.Section.Id,
+                        Name = product.Section.Name,
+                        Order = product.Section.Order
+                    }
                 });
             }
             return View(productsViews);
@@ -48,8 +59,29 @@ namespace AzureAspNetCore.Areas.Admin.Controllers
             ViewBag.Brands = _sqlProductData.GetBrands();
             ViewBag.Sections = _sqlProductData.GetSections();
 
-            var product = id != null ? _sqlProductData.GetProductById((int)id) : new Product(){Id = -1};
-            return View(product);
+            var productDB = id != null ? _sqlProductData.GetProductById((int)id) : new Product(){Id = -1};
+            var productView = new ProductView()
+            {
+                Id = productDB.Id,
+                Name = productDB.Name,
+                Order = productDB.Order,
+                Price = productDB.Price,
+                ImageUrl = productDB.ImageUrl,
+                Brand = new BrandSectionView()
+                {
+                    Id = productDB.Brand.Id,
+                    Name = productDB.Brand.Name,
+                    Order = productDB.Brand.Order
+                },
+                Section = new BrandSectionView()
+                { 
+                    Id = productDB.Section.Id,
+                    Name = productDB.Section.Name,
+                    Order = productDB.Section.Order
+                }
+            };
+
+            return View(productView);
         }
 
         [HttpPost]

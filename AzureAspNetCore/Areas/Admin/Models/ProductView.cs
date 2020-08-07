@@ -29,9 +29,9 @@ namespace AzureAspNetCore.Areas.Admin.Models
         public string ImageUrl { get; set; }
 
         [DisplayName("Бренд")]
-        public BrandSectionView BrandId { get; set; }
+        public BrandSectionView Brand { get; set; }
 
         [DisplayName("Секция")]
-        public BrandSectionView SectionId { get; set; }
+        public BrandSectionView Section { get; set; }
     }
 }
