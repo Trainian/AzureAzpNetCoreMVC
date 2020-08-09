@@ -4,6 +4,10 @@
     Layout = "_Layout";
 }
 
+@section Styles
+{
+    <link href="~/css/lightbox.min.css" rel="stylesheet" />
+}
 
 <!-- Main content -->
 <section class="content">
@@ -18,7 +22,7 @@
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    <form role="form" asp-action="Product">
+                    <form role="form" asp-action="Product" enctype="multipart/form-data">
                         <div asp-validation-summary="ModelOnly" class="alert-danger text-danger"></div>
                         <div class="card-body">
                             <div class="form-group">
@@ -33,55 +37,48 @@
                             </div>
                             <div class="form-group">
                                 <label asp-for="Price"></label>
-                                <input type="number" value="@Model.Price" asp-for="Price">
+                                <input type="number" value="@Model.Price" asp-for="Price" step=".01">
                                 <span asp-validation-for="Price" class="text-danger"></span>
                             </div>
                             <div class="form-group">
                                 <label asp-for="ImageUrl"></label>
-                                <input type="file" value="@Model.ImageUrl" asp-for="ImageUrl">
+                                <input type="file" asp-for="ImageUrl" accept=".jpg, .jpeg, .png" name="formFile" onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0]); document.getElementById('bigImg').href = window.URL.createObjectURL(this.files[0]);">
                                 <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                                <a id="bigImg" href="~/images/shop/@Model.ImageUrl"> <img id="output" src="~/images/shop/@Model.ImageUrl" style="max-width: 100px; max-height: 100px" alt="" /> </a>
                             </div>
                             <div class="form-group">
-                                <label asp-for="Brand"></label>
-                                <select asp-for="Brand">
-                                    @foreach (Brand elem in ViewBag.Brands)
+                                <label asp-for="BrandId"></label>
+                                <select asp-for="BrandId" asp-items="ViewBag.Brands">
+                                    @*@foreach (var elem in ViewBag.Brands)
                                     {
                                         if (elem.Id == @Model.Brand.Id)
                                         {
-                                            <option value="@elem.Name" selected>@elem.Name</option>
-                                            <option hidden value="@elem.Id"></option>
-                                            <option hidden value="@elem.Order"></option>
+                                            <option value="@elem" selected>@elem.Name</option>
                                         }
                                         else
                                         {
-                                            <option value="@elem.Id">@elem.Name</option>
-                                            <option hidden value="@elem.Id"></option>
-                                            <option hidden value="@elem.Order"></option>
+                                            <option value="@elem">@elem</option>
                                         }
-                                    }
+                                    }*@
                                 </select>
-                                <span asp-validation-for="Brand" class="text-danger"></span>
+                                <span asp-validation-for="BrandId" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label asp-for="Section"></label>
-                                <select asp-for="Section">
-                                    @foreach (Section elem in ViewBag.Sections)
+                                <label asp-for="SectionId"></label>
+                                <select asp-for="SectionId" asp-items="ViewBag.Sections">
+                                    @*@foreach (var elem in ViewBag.Sections)
                                     {
                                         if (elem.Id == @Model.Section.Id)
                                         {
-                                            <option value="@elem.Id" selected>@elem.Name</option>
-                                            <option hidden value="@elem.Id"></option>
-                                            <option hidden value="@elem.Order"></option>
+                                            <option value="@elem" selected>@elem.Name</option>
                                         }
                                         else
                                         {
-                                            <option value="@elem.Id">@elem.Name</option>
-                                            <option hidden value="@elem.Id"></option>
-                                            <option hidden value="@elem.Order"></option>
+                                            <option value="@elem">@elem</option>
                                         }
-                                    }
+                                    }*@
                                 </select>
-                                <span asp-validation-for="Section" class="text-danger"></span>
+                                <span asp-validation-for="SectionId" class="text-danger"></span>
                             </div>
                         </div>
                         <!-- /.card-body -->
@@ -95,3 +92,16 @@
         </div>
     </div>
 </section>
+@section Scripts{
+    <script src="~/js/lightbox.js"></script>
+    <script src="~/js/lightbox-plus-jquery.min.js"></script>
+    <script>
+        // Картинка
+        lightbox.option({
+            'resizeDuration': 4000,
+            'wrapAround': true
+        })
+    </script>
+
+
+}

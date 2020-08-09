@@ -8,7 +8,9 @@ using AzureAspNetCore.Infrastructure.Interfaces;
 using AzureAspNetCore.Infrastructure.Sql;
 using AzureAspNetCore.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using ProductView = AzureAspNetCore.Areas.Admin.Models.ProductView;
 
 namespace AzureAspNetCore.Areas.Admin.Controllers
@@ -56,8 +58,12 @@ namespace AzureAspNetCore.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Product(int? id)
         {
-            ViewBag.Brands = _sqlProductData.GetBrands();
-            ViewBag.Sections = _sqlProductData.GetSections();
+            
+            var brands = _sqlProductData.GetBrands();
+            ViewBag.Brands = new SelectList(brands, "Id", "Name");
+
+            var sections = _sqlProductData.GetSections();
+            ViewBag.Sections = new SelectList(sections, "Id", "Name");
 
             var productDB = id != null ? _sqlProductData.GetProductById((int)id) : new Product(){Id = -1};
             var productView = new ProductView()
@@ -85,10 +91,11 @@ namespace AzureAspNetCore.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Product(Product product) // TODO: Реализовать POST для Product
+        public IActionResult Product(ProductView product, IFormFile? formFile) // TODO: Реализовать POST для Product
         {
             ViewBag.Brands = new List<Brand>();
             ViewBag.Sections = new List<Section>();
+
             if (ModelState.IsValid)
             {
                 if (product.Id != -1)
