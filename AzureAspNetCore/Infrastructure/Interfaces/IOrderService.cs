@@ -20,6 +20,10 @@ namespace AzureAspNetCore.Infrastructure.Interfaces
 
         public IEnumerable<OrderItem> GetAllOrderItems();
 
-        public OrderItem GetOrderItem(int id);
+        public OrderItem GetOrderItemById(int id);
+
+        public void CreateOrderItem(Order order, OrderItem item);
+
+        public void DeleteOrderItem();
     }
 }
