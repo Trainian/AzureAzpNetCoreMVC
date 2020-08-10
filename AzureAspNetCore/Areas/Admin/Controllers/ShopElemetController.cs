@@ -57,14 +57,7 @@ namespace AzureAspNetCore.Areas.Admin.Controllers
 
         [HttpGet]
         public IActionResult Product(int? id)
-        {
-            
-            var brands = _sqlProductData.GetBrands();
-            ViewBag.Brands = new SelectList(brands, "Id", "Name");
-
-            var sections = _sqlProductData.GetSections();
-            ViewBag.Sections = new SelectList(sections, "Id", "Name");
-
+        {      
             var productDB = id != null ? _sqlProductData.GetProductById((int)id) : new Product(){Id = -1};
             var productView = new ProductView()
             {
@@ -73,12 +66,14 @@ namespace AzureAspNetCore.Areas.Admin.Controllers
                 Order = productDB.Order,
                 Price = productDB.Price,
                 ImageUrl = productDB.ImageUrl,
+                BrandId = (int)(productDB.BrandId != null ? productDB.BrandId : null),
                 Brand = new BrandSectionView()
                 {
                     Id = productDB.Brand.Id,
                     Name = productDB.Brand.Name,
                     Order = productDB.Brand.Order
                 },
+                SectionId = productDB.SectionId,
                 Section = new BrandSectionView()
                 { 
                     Id = productDB.Section.Id,
@@ -86,6 +81,12 @@ namespace AzureAspNetCore.Areas.Admin.Controllers
                     Order = productDB.Section.Order
                 }
             };
+
+            var brands = _sqlProductData.GetBrands();
+            ViewBag.Brands = new SelectList(brands, "Id", "Name", productView.BrandId);
+
+            var sections = _sqlProductData.GetSections();
+            ViewBag.Sections = new SelectList(sections, "Id", "Name", productView.SectionId);
 
             return View(productView);
         }
