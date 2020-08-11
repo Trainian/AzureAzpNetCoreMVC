@@ -13,7 +13,7 @@ namespace AzureAspNetCore.Domain.Entities
 
         public string Address { get; set; }
 
-        public virtual ICollection<OrderItem> items { get; set; }
+        public virtual ICollection<OrderItem> Items { get; set; }
 
         public virtual User User { get; set; }
     }

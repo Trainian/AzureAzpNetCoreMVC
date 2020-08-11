@@ -8,22 +8,22 @@ namespace AzureAspNetCore.Infrastructure.Interfaces
 {
     public interface IOrderService
     {
-        public IEnumerable<Order> GetAllOrders();
+        public IQueryable<Order> GetAllOrders();
 
-        public IEnumerable<Order> GetAllUserOrders(string id);
+        public IQueryable<Order> GetAllUserOrders(string id);
 
         public Order GetOrderById(int id);
 
         public void CreateOrder(Order order);
 
-        public void DeleteOrder();
+        public void DeleteOrder(int id);
 
-        public IEnumerable<OrderItem> GetAllOrderItems();
+        public IQueryable<OrderItem> GetAllOrderItems();
 
         public OrderItem GetOrderItemById(int id);
 
-        public void CreateOrderItem(Order order, OrderItem item);
+        public void CreateOrderItem(OrderItem item);
 
-        public void DeleteOrderItem();
+        public void DeleteOrderItem(int id);
     }
 }

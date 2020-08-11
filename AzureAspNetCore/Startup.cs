@@ -42,6 +42,8 @@ namespace AzureAspNetCore
             services.AddTransient<IUserService, UserService>();
 
             services.AddTransient<IRoleService, RoleService>();
+            
+            services.AddTransient<IOrderService, OrderService>();
 
             services.AddDbContext<AzureAspNetCoreContext>(options =>
                 options.UseSqlServer(_configuration.GetConnectionString("DBConnection")));
