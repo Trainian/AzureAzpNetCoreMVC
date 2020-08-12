@@ -20,22 +20,24 @@ namespace AzureAspNetCore.Areas.Admin.Models
 
         [Required(ErrorMessage = "Цена должна быть назначена")]
         [DisplayName("Цена")]
+        [DataType(DataType.Currency)]
         public decimal Price { get; set; }
 
         [DisplayName("Позиция")]
         public int Order { get; set; }
 
         [DisplayName("Картинка")]
-        public string ImageUrl { get; set; }
+        [DataType(DataType.ImageUrl)]
+        public string? ImageUrl { get; set; }
 
         [DisplayName("Бренд")]
-        public BrandSectionView Brand { get; set; }
+        public BrandSectionView? Brand { get; set; }
 
         [DisplayName("Бренд ИД")]
         public int BrandId { get; set; }
 
         [DisplayName("Секция")]
-        public BrandSectionView Section { get; set; }
+        public BrandSectionView? Section { get; set; }
 
         [DisplayName("Секция ИД")]
         public int SectionId { get; set; }
