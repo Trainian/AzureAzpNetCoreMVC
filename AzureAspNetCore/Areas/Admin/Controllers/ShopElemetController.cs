@@ -96,12 +96,31 @@ namespace AzureAspNetCore.Areas.Admin.Controllers
         {
             ViewBag.Brands = new List<Brand>();
             ViewBag.Sections = new List<Section>();
-
+            
             if (ModelState.IsValid)
             {
                 if (product.Id != -1)
                 {
-
+                    var productDB = _sqlProductData.GetProductById(product.Id);
+                    productDB.Name = product.Name;
+                    productDB.Order = product.Order;
+                    productDB.Price = product.Price;
+                    productDB.ImageUrl = formFile?.Name;
+                    productDB.BrandId = product.BrandId;
+                    productDB.SectionId = product.SectionId;
+                }
+                else
+                {
+                    var productNew = new Product()
+                    {
+                        Name = product.Name,
+                        Order = product.Order,
+                        Price = product.Price,
+                        ImageUrl = product.ImageUrl,
+                        BrandId = product.BrandId,
+                        SectionId = product.SectionId
+                    };
+                    _sqlProductData.CreateProduct(productNew);
                 }
             }
             return View(product);

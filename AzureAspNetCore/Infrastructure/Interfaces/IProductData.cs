@@ -18,5 +18,7 @@ namespace AzureAspNetCore.Infrastructure.Interfaces
         int GetBrandProductsCount(int brandId);
 
         Product GetProductById(int brandId);
+
+        public void CreateProduct(Product product);
     }
 }

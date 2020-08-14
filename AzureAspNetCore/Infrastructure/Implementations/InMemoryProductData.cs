@@ -429,6 +429,11 @@ namespace AzureAspNetCore.Infrastructure.Implementations
             throw new NotImplementedException();
         }
 
+        public void CreateProduct(Product product)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<Section> GetSections()
         {
             return _sections;

@@ -20,7 +20,6 @@ namespace AzureAspNetCore.Areas.Admin.Models
 
         [Required(ErrorMessage = "Цена должна быть назначена")]
         [DisplayName("Цена")]
-        [DataType(DataType.Currency)]
         public decimal Price { get; set; }
 
         [DisplayName("Позиция")]

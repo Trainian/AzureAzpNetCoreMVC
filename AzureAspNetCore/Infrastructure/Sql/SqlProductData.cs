@@ -51,5 +51,12 @@ namespace AzureAspNetCore.Infrastructure.Sql
         {
             return _context.Products.Include(c => c.Brand).Include(c => c.Section).FirstOrDefault(c => c.Id.Equals(productId));
         }
+
+        public void CreateProduct(Product product)
+        {
+            int id = _context.Products.Max(x => x.Id);
+            product.Id = id;
+            _context.Products.Add(product);
+        }
     }
 }
