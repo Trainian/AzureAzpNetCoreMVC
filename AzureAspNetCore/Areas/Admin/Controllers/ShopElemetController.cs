@@ -96,7 +96,7 @@ namespace AzureAspNetCore.Areas.Admin.Controllers
         {
             ViewBag.Brands = new List<Brand>();
             ViewBag.Sections = new List<Section>();
-            
+
             if (ModelState.IsValid)
             {
                 if (product.Id != -1)
@@ -122,7 +122,16 @@ namespace AzureAspNetCore.Areas.Admin.Controllers
                     };
                     _sqlProductData.CreateProduct(productNew);
                 }
+
+                RedirectToAction("Products");
             }
+
+            var brands = _sqlProductData.GetBrands();
+            ViewBag.Brands = new SelectList(brands, "Id", "Name");
+
+            var sections = _sqlProductData.GetSections();
+            ViewBag.Sections = new SelectList(sections, "Id", "Name");
+
             return View(product);
         }
 

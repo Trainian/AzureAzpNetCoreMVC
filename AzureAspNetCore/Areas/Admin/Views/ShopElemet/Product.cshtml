@@ -4,6 +4,7 @@
     Layout = "_Layout";
 }
 
+
 @section Styles
 {
     <link href="~/css/lightbox.min.css" rel="stylesheet" />
@@ -32,12 +33,12 @@
                             </div>
                             <div class="form-group">
                                 <label asp-for="Order"></label>
-                                <input type="number" value="@Model.Order" asp-for="Order">
+                                <input type="number" value="@Model.Order" asp-for="Order" step="1">
                                 <span asp-validation-for="Order" class="text-danger"></span>
                             </div>
                             <div class="form-group">
                                 <label asp-for="Price"></label>
-                                <input type="number" value="@Model.Price" asp-for="Price" step=".01">
+                                <input inputmode="decimal" value="@Model.Price" asp-for="Price" pattern="^\d+(,\d{1,2})?">
                                 <span asp-validation-for="Price" class="text-danger"></span>
                             </div>
                             <div class="form-group">
