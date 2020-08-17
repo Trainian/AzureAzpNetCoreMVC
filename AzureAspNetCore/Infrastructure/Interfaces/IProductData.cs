@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AzureAspNetCore.Domain.Entities;
 using AzureAspNetCore.Models;
+using AzureAspNetCore.Models.Cart;
 
 namespace AzureAspNetCore.Infrastructure.Interfaces
 {
@@ -20,5 +21,9 @@ namespace AzureAspNetCore.Infrastructure.Interfaces
         Product GetProductById(int brandId);
 
         public void CreateProduct(Product product);
+
+        public void SaveDB();
+
+        void CreateOrder(Order order);
     }
 }

@@ -16,5 +16,13 @@ namespace AzureAspNetCore.Models.Cart
                 return Items?.Sum(x => x.Value) ?? 0;
             }
         }
+
+        public decimal ItemsPrice
+        {
+            get
+            {
+                return (decimal)Items?.Sum(x => x.Key.Price * x.Value);
+            }
+        }
     }
 }

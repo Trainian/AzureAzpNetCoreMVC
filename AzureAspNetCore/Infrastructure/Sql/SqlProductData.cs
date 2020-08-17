@@ -6,6 +6,7 @@ using AzureAspNetCore.DAL.Context;
 using AzureAspNetCore.Domain.Entities;
 using AzureAspNetCore.Infrastructure.Interfaces;
 using AzureAspNetCore.Models;
+using AzureAspNetCore.Models.Cart;
 using Microsoft.EntityFrameworkCore;
 
 namespace AzureAspNetCore.Infrastructure.Sql
@@ -58,5 +59,16 @@ namespace AzureAspNetCore.Infrastructure.Sql
             product.Id = id;
             _context.Products.Add(product);
         }
+
+        public void SaveDB()
+        {
+            _context.SaveChanges();
+        }
+
+        public void CreateOrder(Order order)
+        {
+            _context.Orders.Add(order);
+        }
+
     }
 }

@@ -23,6 +23,6 @@ namespace AzureAspNetCore.Models
 
         public bool LongCoockie { get; set; }
 
-        public string ReturnURL { get; set; }
+        public string? ReturnURL { get; set; }
     }
 }

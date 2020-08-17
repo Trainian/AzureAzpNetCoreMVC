@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AzureAspNetCore.Infrastructure.Interfaces;
+using AzureAspNetCore.Models.Cart;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AzureAspNetCore.Controllers
@@ -17,12 +18,6 @@ namespace AzureAspNetCore.Controllers
         }
 
         public IActionResult Cart()
-        {
-            var cart = _cartService.TransformCart();
-            return View(cart);
-        }
-
-        public IActionResult Checkout()
         {
             var cart = _cartService.TransformCart();
             return View(cart);
@@ -46,6 +41,19 @@ namespace AzureAspNetCore.Controllers
         {
             _cartService.RemoveFromCart(id);
             return RedirectToAction("Cart", "Cart");
+        }
+
+        [HttpGet]
+        public IActionResult Ckeckout()
+        {
+            var cart = _cartService.TransformCart();
+            return View(cart);
+        }
+
+        [HttpPost]
+        public IActionResult Ckeckout(CartView cartView)
+        {
+            return View();
         }
     }
 }

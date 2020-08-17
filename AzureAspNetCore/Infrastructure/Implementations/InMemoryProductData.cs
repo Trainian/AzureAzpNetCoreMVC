@@ -434,6 +434,16 @@ namespace AzureAspNetCore.Infrastructure.Implementations
             throw new NotImplementedException();
         }
 
+        public void SaveDB()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CreateOrder(Order cartView)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<Section> GetSections()
         {
             return _sections;

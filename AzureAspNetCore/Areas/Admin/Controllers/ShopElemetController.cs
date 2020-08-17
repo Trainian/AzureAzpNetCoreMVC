@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using AzureAspNetCore.Areas.Admin.Models;
@@ -8,6 +9,7 @@ using AzureAspNetCore.Infrastructure.Interfaces;
 using AzureAspNetCore.Infrastructure.Sql;
 using AzureAspNetCore.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -20,10 +22,12 @@ namespace AzureAspNetCore.Areas.Admin.Controllers
     public class ShopElemetController : Controller
     {
         private readonly IProductData _sqlProductData;
+        private readonly IWebHostEnvironment _environment;
 
-        public ShopElemetController(IProductData sqlProductData)
+        public ShopElemetController(IProductData sqlProductData, IWebHostEnvironment environment)
         {
             _sqlProductData = sqlProductData;
+            _environment = environment;
         }
         public IActionResult Products()
         {
@@ -92,7 +96,7 @@ namespace AzureAspNetCore.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Product(ProductView product, IFormFile? formFile) // TODO: Реализовать POST для Product
+        public async Task<IActionResult> Product(ProductView product, IFormFile? formFile)
         {
             ViewBag.Brands = new List<Brand>();
             ViewBag.Sections = new List<Section>();
@@ -105,7 +109,7 @@ namespace AzureAspNetCore.Areas.Admin.Controllers
                     productDB.Name = product.Name;
                     productDB.Order = product.Order;
                     productDB.Price = product.Price;
-                    productDB.ImageUrl = formFile?.Name;
+                    productDB.ImageUrl = formFile?.FileName ?? product.ImageUrl;
                     productDB.BrandId = product.BrandId;
                     productDB.SectionId = product.SectionId;
                 }
@@ -116,14 +120,24 @@ namespace AzureAspNetCore.Areas.Admin.Controllers
                         Name = product.Name,
                         Order = product.Order,
                         Price = product.Price,
-                        ImageUrl = product.ImageUrl,
+                        ImageUrl = formFile?.FileName ?? product.ImageUrl,
                         BrandId = product.BrandId,
                         SectionId = product.SectionId
                     };
                     _sqlProductData.CreateProduct(productNew);
                 }
 
-                RedirectToAction("Products");
+                if (formFile != null)
+                {
+                    var path = "/images/shop/" + formFile.FileName;
+
+                    using (var fs = new FileStream(_environment.WebRootPath + path, FileMode.Create))
+                    {
+                        await formFile.CopyToAsync(fs);
+                    }
+                }
+                _sqlProductData.SaveDB();
+                return RedirectToAction("Products", "ShopElemet", new { area = "Admin" });
             }
 
             var brands = _sqlProductData.GetBrands();
